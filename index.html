@@ -5,10 +5,61 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic Tac Toe</title>
+    <link type="text/css" rel="stylesheet" href="assets/normalize.css" />
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js" defer></script>
 </head>
 
-<body></body>
+<body>
+    <div class="home-screen">
+        <h1 class="game-name">Tic Tac Toe</h1>
+
+        <div class="game-symbols">
+            <div class="x-symbol">x</div>
+            <div class="o-symbol">o</div>
+        </div>
+
+        <button class="play-button">PLAY</button>
+    </div>
+
+    <div class="menu-screen">
+        <header>
+            <div class="x-symbol">x</div>
+            <div class="o-symbol">o</div>
+        </header>
+
+        <div class="players-selection-container">
+            <button class="player-vs-player">PLAYER VS PLAYER</button>
+            <button class="player-vs-ai-bot">PLAYER VS AI BOT</button>
+            <button class="ai-bot-vs-ai-bot">AI BOT VS AI BOT</button>
+        </div>
+
+        <div class="player-one-sign-selection-container">
+            <div class="title">PLAYER 1'S SIGN</div>
+            <div class="sign-container">
+                <button class="x-button">x</button>
+                <button class="o-button">o</button>
+            </div>
+            <div class="notice">REMEMBER: X GOES FIRST</div>
+        </div>
+
+        <div class="rounds-container">
+            <div class="title">NUMBER OF ROUNDS</div>
+            <div class="round-selection-container">
+                <button class="one">1</button>
+                <button class="three">3</button>
+                <button class="five">5</button>
+            </div>
+        </div>
+
+        <button class="start-game-button">START GAME</button>
+    </div>
+
+    <div class="game-screen"></div>
+
+    <div class="round-end-screen"></div>
+
+    <div class="game-end-screen"></div>
+</body>
 
 </html>
