@@ -41,10 +41,10 @@
         <div class="player-one-sign-selection-container">
             <div class="title">PLAYER 1'S SIGN</div>
             <div class="sign-container">
-                <button class="x-button">x</button>
-                <button class="o-button">o</button>
+                <button class="x-button">X</button>
+                <button class="o-button">O</button>
             </div>
-            <div class="notice">REMEMBER: X GOES FIRST</div>
+            <div class="notice">REMEMBER: <span class="x-sign">X</span> GOES FIRST</div>
         </div>
 
         <div class="rounds-container">
@@ -59,11 +59,71 @@
         <button class="start-game-button">START GAME</button>
     </div>
 
-    <div class="game-screen"></div>
+    <div class="game-screen">
+        <div class="header-container">
+            <div class="exit-container">
+                <button class="exit-button">←</button>
+                <div class="pop-up-info"></div>
+            </div>
 
-    <div class="round-end-screen"></div>
+            <div class="scoresheet-container">
+                <div class="title">SCORESHEET</div>
+                <div class="status-container">
+                    <div class="player-x">PLAYER <span class="x-sign">X</span>: <span class="score">0</span></div>
+                    <div class="player-o">PLAYER <span class="o-sign">O</span>: <span class="score">0</span></div>
+                    <div class="ties">TIES: <span class="score">0</span></div>
+                </div>
+            </div>
 
-    <div class="game-end-screen"></div>
+            <div class="restart-container">
+                <button class="restart-button">↻</button>
+                <div class="pop-up-info"></div>
+            </div>
+        </div>
+
+        <div class="game-grid-container">
+            <div class="grid-space-0"></div>
+            <div class="grid-space-1"></div>
+            <div class="grid-space-2"></div>
+            <div class="grid-space-3"></div>
+            <div class="grid-space-4"></div>
+            <div class="grid-space-5"></div>
+            <div class="grid-space-6"></div>
+            <div class="grid-space-7"></div>
+            <div class="grid-space-8"></div>
+        </div>
+
+        <div class="turn-notice"></div>
+    </div>
+
+    <div class="round-end-panel">
+        <div class="announcement">THE WINNER IS PLAYER</div>
+        <div class="sign"></div>
+
+        <div class="options-container">
+            <button>QUIT GAME</button>
+            <button>RESTART GAME</button>
+            <button>NEXT ROUND</button>
+        </div>
+    </div>
+
+    <div class="game-end-panel">
+        <div class="announcement">PLAYER <span class="sign"></span> WON</div>
+
+        <div class="scoresheet-container">
+            <div class="title">SCORESHEET</div>
+            <div class="status-container">
+                <div class="player-x">PLAYER <span class="x-sign">X</span>: <span class="score">0</span></div>
+                <div class="player-o">PLAYER <span class="o-sign">O</span>: <span class="score">0</span></div>
+                <div class="ties">TIES: <span class="score">0</span></div>
+            </div>
+        </div>
+
+        <div class="options-container">
+            <button>QUIT GAME</button>
+            <button>RESTART GAME</button>
+        </div>
+    </div>
 </body>
 
 </html>

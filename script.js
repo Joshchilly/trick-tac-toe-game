@@ -9,7 +9,9 @@ const gameboard = (function () {
 
     let fullBoard = false;
     const checkIfFullBoard = () => fullBoard;
-    const setFullBoard = () => fullBoard = true;
+    function setFullBoard(status) {
+        fullBoard = status;
+    }
 
     function checkIfThreeInARow() {
         // Define the collection of rows on the board 
@@ -54,7 +56,11 @@ function createPlayer(name, sign) {
 }
 
 const displayController = (function () {
-    const screens = null;
+    let currentScreen = null;
+    function setCurrentScreen(screen) {
+        currentScreen = screen;
+    }
+
     function showHomeScreen() {
 
     }
@@ -67,15 +73,15 @@ const displayController = (function () {
 
     }
 
-    function showRoundEndScreen() {
+    function showRoundEndPanel() {
 
     }
 
-    function showGameEndScreen() {
+    function showGameEndPanel() {
 
     }
 
-    return { showHomeScreen, showMenuScreen, showGameScreen, showRoundEndScreen, showGameEndScreen };
+    return { setCurrentScreen, showHomeScreen, showMenuScreen, showGameScreen, showRoundEndPanel, showGameEndPanel };
 })();
 
 const events = (function () {
@@ -119,6 +125,8 @@ const gameFlow = (function () {
 
     function endGame() {
         gameboard.deleteBoard();
+        displayController.setCurrentScreen(null);
+        gameboard.setFullBoard(false);
     }
 
     return { beginNewGame, endGame };
