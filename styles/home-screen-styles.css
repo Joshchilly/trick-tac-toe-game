@@ -1,14 +1,21 @@
 .home-screen {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-rows: 1fr 3fr 1fr;
-    grid-template-columns: repeat(3, minmax(auto, 225px));
     height: 100vh;
     background-color: var(--background-color);
-    padding-inline: 10px;
     color: var(--text-color);
+}
+
+.home-screen button {
+    cursor: pointer;
+}
+
+.home-screen>.grid-container {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-columns: repeat(3, minmax(auto, 225px));
     justify-content: center;
     justify-items: center;
+    background-color: var(--background-color);
 }
 
 .home-screen .game-name {
@@ -23,7 +30,11 @@
 
 @media (max-width: 500px) {
     .game-name {
-        font-size: 3.2rem;
+        font-size: 3.4rem;
+    }
+
+    .home-screen>.grid-container {
+        grid-template-rows: 1fr 1.3fr 1fr;
     }
 }
 
@@ -35,7 +46,7 @@
     grid-area: 2 / 2 / 3 / 3;
     place-self: center;
     display: flex;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     font-size: 8rem;
     font-family: var(--title-font), Times, serif;
 }
@@ -56,28 +67,27 @@
     align-items: center;
     gap: 20px;
     margin-bottom: 15px;
+    margin-top: 10px;
     font-family: var(--text-font), Times, serif;
 }
 
 .home-screen .start-button {
     color: var(--button-background-color);
     height: 10vh;
-    width: 37vh;
+
     font-size: 1.7rem;
 }
 
 .home-screen .theme-button-container {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     background-color: var(--button-background-color);
-    padding: 9px;
-
+    padding: 14px;
 }
 
 .home-screen .theme-button {
-    height: 4vh;
-    width: 8vh;
+    padding: 3px;
 }
 
 .home-screen .theme-button::after {

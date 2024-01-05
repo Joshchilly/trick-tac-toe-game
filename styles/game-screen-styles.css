@@ -1,0 +1,79 @@
+.game-screen {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    height: 100vh;
+    width: 100vw;
+}
+
+@media (orientation: landscape) {
+    .game-screen {
+        height: auto;
+    }
+}
+
+.game-screen .exit-container,
+.game-screen .restart-container {
+    position: absolute;
+}
+
+.game-screen .exit-container {
+    left: 15px;
+    top: 15px;
+}
+
+.game-screen .restart-container {
+    right: 15px;
+    top: 15px;
+}
+
+.game-screen button {
+    background-color: var(--button-background-color);
+    color: var(--text-color);
+    padding: 10px;
+    padding-inline: 17px;
+    cursor: pointer;
+}
+
+.game-screen .scoresheet-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    width: 155px;
+    margin-inline: auto;
+    margin-top: 15px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    font-size: 1.2531rem;
+    background-color: var(--button-panel-background-color);
+}
+
+.game-screen .status-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.game-screen .game-grid-container {
+    display: grid;
+    grid-template: repeat(3, minmax(100px, 127.8px)) / repeat(3, minmax(100px, 127.8px));
+    grid-auto-flow: column;
+    gap: 15px;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    width: 100vw;
+    margin-inline: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.game-screen .turn-notice {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    background-color: var(--button-panel-background-color);
+    padding: 20px;
+    width: 10vw;
+    margin-inline: auto;
+}

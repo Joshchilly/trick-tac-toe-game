@@ -10,6 +10,7 @@
 
 
 :root {
+    background-color: var(--background-color);
     --text-font: "Bungee Spice";
     --title-font: "Archivo";
 }
@@ -20,7 +21,7 @@
     --x-color: rgb(101, 227, 66);
     --o-color: rgb(241, 180, 64);
     --background-color: rgb(142, 46, 142);
-    --button-panel-background-color: rgb(99, 25, 99);
+    --button-panel-background-color: rgb(87, 12, 106);
     --button-background-color: rgb(71, 18, 71);
     --text-color: rgb(239, 220, 220);
     --text-notice-color: rgb(161, 160, 160);
@@ -32,7 +33,7 @@
     --x-color: blue;
     --o-color: orange;
     --background-color: rgb(100, 22, 100);
-    --button-panel-background-color: rgb(105, 35, 105);
+    --button-panel-background-color: rgb(55, 7, 74);
     --button-background-color: rgb(52, 14, 52);
     --text-color: rgb(239, 220, 220);
     --text-notice-color: rgb(161, 160, 160);
@@ -45,7 +46,7 @@
         --x-color: blue;
         --o-color: orange;
         --background-color: rgb(100, 22, 100);
-        --button-panel-background-color: rgb(105, 35, 105);
+        --button-panel-background-color: rgb(55, 7, 74);
         --button-background-color: rgb(52, 14, 52);
         --text-color: rgb(239, 220, 220);
         --text-notice-color: rgb(161, 160, 160);
@@ -53,6 +54,7 @@
     }
 }
 
+/* Google fonts symbols */
 .material-symbols-outlined {
     font-variation-settings:
         'FILL' 0,
@@ -69,9 +71,16 @@
     display: block;
 }
 
-.menu-screen,
+/* Add the following class selector to the game-screen element when round/game ends */
+.game-screen-blur {
+    filter: blur(10px);
+    transition: filter 2s ease-in;
+    z-index: 1;
+}
+
+.home-screen,
 .game-screen,
-.round-end-panel,
-.game-end-panel {
+.game-end-panel,
+.round-end-panel {
     display: none;
 }
