@@ -1,7 +1,24 @@
-.hidden-layout {
-    display: none;
+.menu-screen {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: 1fr 1fr 3fr 2fr 3fr 2fr 1fr;
+    grid-template-columns: repeat(3, minmax(auto, 1fr));
+    height: 100vh;
+    background-color: var(--background-color);
+    padding-inline: 10px;
+    color: var(--text-color);
+    justify-content: center;
+    justify-items: center;
 }
 
-.active-layout {
-    display: block;
+.menu-screen>header {
+    grid-row: 1;
+}
+
+.menu-screen>header>.exit-button {
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+.menu-screen>header>.signs {
+    grid-area: 1 / 2 / 2 / 3;
 }

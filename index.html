@@ -5,50 +5,88 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic Tac Toe</title>
-    <link type="text/css" rel="stylesheet" href="assets/normalize.css" />
-    <link rel="stylesheet" href="styles/home-screen-styles.css" />
-    <link rel="stylesheet" href="styles/menu-screen-styles.css" />
-    <link rel="stylesheet" href="styles/game-screen-styles.css" />
-    <link rel="stylesheet" href="styles/round-end-screen-styles.css" />
-    <link rel="stylesheet" href="styles/game-end-screen-styles.css" />
+    <link rel="stylesheet" href="styles/global.css">
     <script src="script.js" defer></script>
 </head>
 
 <body>
     <div class="home-screen">
-        <h1 class="game-name">Tic Tac Toe</h1>
-
-        <div class="game-symbols">
-            <div class="x-symbol">x</div>
-            <div class="o-symbol">o</div>
+        <div class="game-name">
+            <div>Trick</div>
+            <div>Tac</div>
+            <div>Toe</div>
         </div>
 
-        <button class="play-button">PLAY</button>
+        <div class="signs">
+            <div class="x-sign">x</div>
+            <div class="o-sign">o</div>
+        </div>
+
+        <div class="footer-buttons">
+            <button class="start-button">START GAME</button>
+
+            <div class="theme-button-container">
+                <label for="color-theme-button">SELECT COLOR THEME:</label>
+                <button class="theme-button" id="color-theme-button"></button>
+            </div>
+        </div>
     </div>
 
     <div class="menu-screen">
         <header>
-            <div class="x-symbol">x</div>
-            <div class="o-symbol">o</div>
+            <button class="exit-button material-symbols-outlined">arrow_back</button>
+
+            <div class="signs">
+                <div class="x-sign">x</div>
+                <div class="o-sign">o</div>
+            </div>
         </header>
 
-        <div class="players-selection-container">
+        <div class="player-selection-container">
             <button class="player-vs-player">PLAYER VS PLAYER</button>
             <button class="player-vs-ai-bot">PLAYER VS AI BOT</button>
             <button class="ai-bot-vs-ai-bot">AI BOT VS AI BOT</button>
         </div>
 
+        <div class="mode-container">
+            <div class="title">MODE</div>
+
+            <div class="regular-container">
+                <button>REGULAR</button>
+                <p>THE CLASSIC TIC TAC TOE GAME AS YOU KNOW IT</p>
+            </div>
+
+            <div class="trick-container">
+                <button>TRICK</button>
+                <p>THE CLASSIC TIC TAC TOE WITH A SPICY TWIST: AT THE BEGINNING OF EACH ROUND A SPACE ON THE BOARD IS
+                    RANDOMLY "CURSED", CAUSING THE SPACE TO SWITCH SIGNS AT THE END OF THE ROUND</p>
+            </div>
+        </div>
+
+        <div class="difficulty-container">
+            <div class="title">DIFFICULTY</div>
+
+            <button>EASY</button>
+            <button>MEDIUM</button>
+            <button class="tricky-button">TRICKY</button>
+        </div>
+
         <div class="player-one-sign-selection-container">
             <div class="title">PLAYER 1'S SIGN</div>
+
             <div class="sign-container">
                 <button class="x-button">X</button>
                 <button class="o-button">O</button>
             </div>
+
+            <div class="random-button">RANDOM</div>
+
             <div class="notice">REMEMBER: <span class="x-sign">X</span> GOES FIRST</div>
         </div>
 
         <div class="rounds-container">
             <div class="title">NUMBER OF ROUNDS</div>
+
             <div class="round-selection-container">
                 <button class="one">1</button>
                 <button class="three">3</button>
@@ -68,6 +106,7 @@
 
             <div class="scoresheet-container">
                 <div class="title">SCORESHEET</div>
+
                 <div class="status-container">
                     <div class="player-x">PLAYER <span class="x-sign">X</span>: <span class="score">0</span></div>
                     <div class="player-o">PLAYER <span class="o-sign">O</span>: <span class="score">0</span></div>
@@ -112,13 +151,14 @@
 
         <div class="scoresheet-container">
             <div class="title">SCORESHEET</div>
+
             <div class="status-container">
                 <div class="player-x">PLAYER <span class="x-sign">X</span>: <span class="score">0</span></div>
                 <div class="player-o">PLAYER <span class="o-sign">O</span>: <span class="score">0</span></div>
                 <div class="ties">TIES: <span class="score">0</span></div>
             </div>
         </div>
-
+        2
         <div class="options-container">
             <button>QUIT GAME</button>
             <button>RESTART GAME</button>
