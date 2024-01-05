@@ -1,6 +1,6 @@
 const gameboard = (function () {
     const board = null;
-    const createNewBoard = () => board = new Array(9);
+    const createNewBoard = () => board = new Array(9).fill(-1);
     const deleteBoard = () => board = null;
 
     function placeOnBoard(space, sign) {
@@ -30,7 +30,9 @@ const gameboard = (function () {
         sets.forEach(set => {
             const [one, two, three] = set;
             if (board[one] === board[two] && board[two] === board[three]) {
-                return true;
+                if (board[one] != -1) {
+                    return true;
+                }
             }
         })
 
@@ -57,31 +59,15 @@ function createPlayer(name, sign) {
 
 const displayController = (function () {
     let currentScreen = null;
-    function setCurrentScreen(screen) {
-        currentScreen = screen;
-    }
+    const screens = document.querySelectorAll('body>div');
+    const getCurrentScreen = () => currentScreen;
+    const showHomeScreen = () => currentScreen = screens[0];
+    const showMenuScreen = () => currentScreen = screens[1];
+    const showGameScreen = () => currentScreen = screens[2];
+    const showRoundEndPanel = () => currentScreen = screens[3];
+    const showGameEndPanel = () => currentScreen = screens[4];
 
-    function showHomeScreen() {
-
-    }
-
-    function showMenuScreen() {
-
-    }
-
-    function showGameScreen() {
-
-    }
-
-    function showRoundEndPanel() {
-
-    }
-
-    function showGameEndPanel() {
-
-    }
-
-    return { setCurrentScreen, showHomeScreen, showMenuScreen, showGameScreen, showRoundEndPanel, showGameEndPanel };
+    return { getCurrentScreen, showHomeScreen, showMenuScreen, showGameScreen, showRoundEndPanel, showGameEndPanel };
 })();
 
 const events = (function () {

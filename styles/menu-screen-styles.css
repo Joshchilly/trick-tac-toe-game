@@ -25,10 +25,25 @@
     }
 }
 
+@media (max-width: 1200px) {
+    .menu-screen .grid-container {
+        height: 180vh;
+        grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
+    }
+
+    .menu-screen .exit-button {
+        left: 8px;
+    }
+}
+
 @media (max-width: 500px) {
     .menu-screen .grid-container {
         height: 180vh;
         grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
+    }
+
+    .menu-screen .exit-button {
+        left: 6px;
     }
 }
 
@@ -55,7 +70,7 @@
 .menu-screen .exit-button {
     position: absolute;
     top: 25px;
-    left: 7px;
+    left: 11.5px;
     padding: 5px;
     padding-inline: 10px;
 }
