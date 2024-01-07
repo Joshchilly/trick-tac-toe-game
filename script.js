@@ -1,5 +1,5 @@
 const gameboard = (function () {
-    const board = null;
+    let board = null;
     const createNewBoard = () => board = new Array(9).fill(-1);
     const deleteBoard = () => board = null;
 
@@ -42,11 +42,11 @@ const gameboard = (function () {
     return { createNewBoard, deleteBoard, placeOnBoard, checkIfFullBoard, setFullBoard, checkIfThreeInARow };
 })();
 
-function createPlayer(name, sign) {
-    const name = name;
+function createPlayer(playerName, playerSign) {
+    const name = playerName;
     const getName = () => name;
 
-    const sign = sign;
+    const sign = playerSign;
     const getSign = () => sign;
 
     let playerTurn = false;
@@ -59,20 +59,53 @@ function createPlayer(name, sign) {
 
 const displayController = (function () {
     let currentScreen = null;
-    const screens = document.querySelectorAll('body>div');
     const getCurrentScreen = () => currentScreen;
-    const showHomeScreen = () => currentScreen = screens[0];
-    const showMenuScreen = () => currentScreen = screens[1];
-    const showGameScreen = () => currentScreen = screens[2];
-    const showRoundEndPanel = () => currentScreen = screens[3];
-    const showGameEndPanel = () => currentScreen = screens[4];
+
+    const screens = document.querySelectorAll('body>div');
+    function displayScreen(screenToDisplay) {
+        screens.forEach(screen => {
+            if (screen != screenToDisplay) {
+                if (screen.classList.contains('game-screen') &&
+                    Array.from(screenToDisplay.classList).some(className => className.includes('panel'))) {
+                    // The current node is the game screen
+                    screen.classList.add('game-screen-blur');
+                } else {
+                    screen.classList.add('hidden-layout');
+                }
+            }
+        });
+        screenToDisplay.classList.remove('hidden-layout');
+        currentScreen = screenToDisplay;
+    }
+
+    const showHomeScreen = () => displayScreen(screens[0]);
+    const showMenuScreen = () => displayScreen(screens[1]);
+    const showGameScreen = () => displayScreen(screens[2]);
+    const showRoundEndPanel = () => displayScreen(screens[3]);
+    const showGameEndPanel = () => displayScreen(screens[4]);
 
     return { getCurrentScreen, showHomeScreen, showMenuScreen, showGameScreen, showRoundEndPanel, showGameEndPanel };
 })();
 
 const events = (function () {
-    function setHomeScreenEventListeners() {
+    function setAllEventListeners() {
+        setHomeScreenEventListeners();
+        setMenuScreenEventListeners();
+        setGameScreenEventListeners();
+        setRoundEndScreenEventListeners();
+        setGameEndScreenEventListeners();
+    }
 
+    function setHomeScreenEventListeners() {
+        document.querySelector('.start-button').addEventListener('click', () => {
+            displayController.showMenuScreen();
+        });
+
+        const root = document.documentElement;
+        document.querySelector('.theme-button').addEventListener('click', () => {
+            root.classList.toggle('light');
+            root.classList.toggle('dark');
+        });
     }
 
     function setMenuScreenEventListeners() {
@@ -91,18 +124,17 @@ const events = (function () {
 
     }
 
-    function setAllEventListeners() {
-        setHomeScreenEventListeners();
-        setMenuScreenEventListeners();
-        setGameScreenEventListeners();
-        setRoundEndScreenEventListeners();
-        setGameEndScreenEventListeners();
-    }
-
     return { setAllEventListeners };
 })();
 
 const gameFlow = (function () {
+    function setInitialColorTheme() {
+        const root = document.documentElement;
+        const rootStyles = getComputedStyle(root);
+        const systemTheme = rootStyles.getPropertyValue('--theme-name');
+        systemTheme == '"LIGHT MODE"' ? root.classList.add('light') : root.classList.add('dark');
+    }
+
     function beginNewGame() {
         events.setAllEventListeners();
         displayController.showHomeScreen();
@@ -115,5 +147,8 @@ const gameFlow = (function () {
         gameboard.setFullBoard(false);
     }
 
-    return { beginNewGame, endGame };
+    return { setInitialColorTheme, beginNewGame, endGame };
 })();
+
+gameFlow.setInitialColorTheme();
+gameFlow.beginNewGame();

@@ -1,118 +1,118 @@
 .game-end-panel {
-    display: grid;
-    grid-template: 1fr 3fr 1fr / repeat(2, minmax(120px, 1fr));
-    place-items: center;
-    width: 100vw;
-    height: 50vh;
-    background-color: var(--background-color);
+  display: grid;
+  grid-template: 1fr 3fr 1fr / repeat(2, minmax(120px, 1fr));
+  place-items: center;
+  width: 100vw;
+  height: 50vh;
+  background-color: var(--background-color);
 
-    /* Styles for showing the round end panel over the game screen */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
+  /* Styles for showing the round end panel over the game screen */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
 }
 
 .game-end-panel .announcement {
-    grid-column-start: 1;
-    grid-column-end: 3;
-    font-size: 3.5rem;
-    color: var(--text-color);
+  grid-column-start: 1;
+  grid-column-end: 3;
+  font-size: 3.5rem;
+  color: var(--text-color);
 }
 
 .game-end-panel .scoresheet-container {
-    grid-area: 2 / 1 / 3 / 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 25px;
-    font-size: 1.9rem;
-    padding: 13px;
-    background-color: var(--button-panel-background-color);
-    color: var(--text-color);
+  grid-area: 2 / 1 / 3 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  font-size: 1.9rem;
+  padding: 13px;
+  background-color: var(--button-panel-background-color);
+  color: var(--text-color);
 }
 
 .game-end-panel .status-container {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .game-end-panel .options-container {
-    grid-area: 3 / 1 / 4 / 3;
-    display: contents;
+  grid-area: 3 / 1 / 4 / 3;
+  display: contents;
 }
 
 .game-end-panel button {
-    padding: 13px;
-    padding-inline: 25px;
-    background-color: var(--button-background-color);
-    color: var(--text-color);
+  padding: 13px;
+  padding-inline: 25px;
+  background-color: var(--button-background-color);
+  color: var(--text-color);
 }
 
 .game-end-panel button:first-of-type {
-    justify-self: end;
-    margin-right: 50px;
+  justify-self: end;
+  margin-right: 50px;
 }
 
 .game-end-panel button:last-of-type {
-    justify-self: start;
-    margin-left: 50px;
+  justify-self: start;
+  margin-left: 50px;
 }
 
 @media (orientation: landscape) and (max-height: 500px) {
-    body {
-        background-color: var(--background-color);
-    }
+  body {
+    background-color: var(--background-color);
+  }
 
-    .game-end-panel {
-        align-content: center;
-    }
+  .game-end-panel {
+    align-content: center;
+  }
 }
 
 @media (max-width: 460px) {
-    .game-end-panel .announcement {
-        font-size: 3rem;
-    }
+  .game-end-panel .announcement {
+    font-size: 3rem;
+  }
 
-    .game-end-panel .scoresheet-container {
-        font-size: 1.5rem;
-    }
+  .game-end-panel .scoresheet-container {
+    font-size: 1.5rem;
+  }
 
-    .game-end-panel button {
-        padding: 8px;
-        padding-inline: 12px;
-    }
+  .game-end-panel button {
+    padding: 8px;
+    padding-inline: 12px;
+  }
 
-    .game-end-panel button:first-of-type {
-        margin-right: 10px;
-    }
+  .game-end-panel button:first-of-type {
+    margin-right: 10px;
+  }
 
-    .game-end-panel button:last-of-type {
-        margin-left: 10px;
-    }
+  .game-end-panel button:last-of-type {
+    margin-left: 10px;
+  }
 }
 
 @media (max-width: 380px) {
-    .game-end-panel .announcement {
-        font-size: 2rem;
-    }
+  .game-end-panel .announcement {
+    font-size: 2rem;
+  }
 
-    .game-end-panel .scoresheet-container {
-        font-size: 1rem;
-    }
+  .game-end-panel .scoresheet-container {
+    font-size: 1rem;
+  }
 
-    .game-end-panel button {
-        padding: 8px;
-        padding-inline: 10px;
-    }
+  .game-end-panel button {
+    padding: 8px;
+    padding-inline: 10px;
+  }
 
-    .game-end-panel button:first-of-type {
-        margin-right: 5px;
-    }
+  .game-end-panel button:first-of-type {
+    margin-right: 5px;
+  }
 
-    .game-end-panel button:last-of-type {
-        margin-left: 5px;
-    }
+  .game-end-panel button:last-of-type {
+    margin-left: 5px;
+  }
 }

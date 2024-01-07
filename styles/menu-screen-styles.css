@@ -1,159 +1,159 @@
 .menu-screen {
-    background-color: var(--background-color);
-    color: var(--text-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .menu-screen .grid-container {
-    position: relative;
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-rows: 0.5fr 1fr 3fr 2fr 3fr 2fr 1fr;
-    grid-template-columns: minmax(auto, 1fr);
-    row-gap: 30px;
-    justify-content: center;
-    justify-items: center;
-    height: 150vh;
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: 0.5fr 1fr 3fr 2fr 3fr 2fr 1fr;
+  grid-template-columns: minmax(auto, 1fr);
+  row-gap: 30px;
+  justify-content: center;
+  justify-items: center;
+  height: 150vh;
 }
 
 @media (orientation: landscape) and (max-height: 500px) {
-    .menu-screen .grid-container {
-        height: 300vh;
-        grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
-    }
+  .menu-screen .grid-container {
+    height: 300vh;
+    grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
+  }
 }
 
 @media (max-width: 1200px) {
-    .menu-screen .grid-container {
-        height: 180vh;
-        grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
-    }
+  .menu-screen .grid-container {
+    height: 180vh;
+    grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
+  }
 
-    .menu-screen .exit-button {
-        left: 8px;
-    }
+  .menu-screen .exit-button {
+    left: 8px;
+  }
 }
 
 @media (max-width: 500px) {
-    .menu-screen .grid-container {
-        height: 180vh;
-        grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
-    }
+  .menu-screen .grid-container {
+    height: 180vh;
+    grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
+  }
 
-    .menu-screen .exit-button {
-        left: 6px;
-    }
+  .menu-screen .exit-button {
+    left: 6px;
+  }
 }
 
 @media (max-width: 390px) {
-    .menu-screen .grid-container {
-        height: 200vh;
-        grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
-    }
+  .menu-screen .grid-container {
+    height: 200vh;
+    grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
+  }
 }
 
 .menu-screen button {
-    background-color: var(--button-background-color);
-    color: var(--text-color);
-    padding: 10px;
-    padding-inline: 17px;
-    cursor: pointer;
+  background-color: var(--button-background-color);
+  color: var(--text-color);
+  padding: 10px;
+  padding-inline: 17px;
+  cursor: pointer;
 }
 
 .menu-screen .header {
-    grid-row: 1;
-    width: 84vw;
+  grid-row: 1;
+  width: 84vw;
 }
 
 .menu-screen .exit-button {
-    position: absolute;
-    top: 25px;
-    left: 11.5px;
-    padding: 5px;
-    padding-inline: 10px;
+  position: absolute;
+  top: 25px;
+  left: 11.5px;
+  padding: 5px;
+  padding-inline: 10px;
 }
 
-.menu-screen .header>.signs {
-    display: flex;
-    justify-content: center;
-    font-size: 3rem;
+.menu-screen .header > .signs {
+  display: flex;
+  justify-content: center;
+  font-size: 3rem;
 }
 
 .mode-container,
 .difficulty-container,
 .player-one-sign-selection-container,
 .rounds-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background-color: var(--button-panel-background-color);
-    padding: 25px;
-    width: 80vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: var(--button-panel-background-color);
+  padding: 25px;
+  width: 80vw;
 }
 
 .player-selection-container {
-    grid-row: 2;
-    align-items: center;
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: repeat(3, minmax(auto, 1fr));
-    background-color: var(--button-panel-background-color);
-    padding: 25px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    gap: 20px;
-    width: 80vw;
+  grid-row: 2;
+  align-items: center;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(3, minmax(auto, 1fr));
+  background-color: var(--button-panel-background-color);
+  padding: 25px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  gap: 20px;
+  width: 80vw;
 }
 
 .mode-container {
-    grid-row: 3;
+  grid-row: 3;
 }
 
 .modes {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(auto, 1fr));
-    gap: 50px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(auto, 1fr));
+  gap: 50px;
 }
 
 .regular-container,
 .trick-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1rem;
 }
 
 .difficulty-container {
-    grid-row: 4;
+  grid-row: 4;
 }
 
 .difficulties,
 .round-selection-container {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: repeat(3, minmax(auto, 1fr));
-    gap: 20px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(3, minmax(auto, 1fr));
+  gap: 20px;
 }
 
 .player-one-sign-selection-container {
-    grid-row: 5;
+  grid-row: 5;
 }
 
-.player-one-sign-selection-container>.buttons {
-    display: flex;
-    gap: 20px;
+.player-one-sign-selection-container > .buttons {
+  display: flex;
+  gap: 20px;
 }
 
 .rounds-container {
-    grid-row: 6;
+  grid-row: 6;
 }
 
 .menu-screen .start-game-button {
-    grid-row: 7;
-    margin-bottom: 20px;
-    padding-inline: 38px;
+  grid-row: 7;
+  margin-bottom: 20px;
+  padding-inline: 38px;
 }
