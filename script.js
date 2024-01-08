@@ -1,7 +1,6 @@
 const gameboard = (function () {
     let board = null;
     const createNewBoard = () => board = new Array(9).fill(-1);
-    const deleteBoard = () => board = null;
 
     function placeOnBoard(space, sign) {
         board[space] = sign;
@@ -39,28 +38,66 @@ const gameboard = (function () {
         return false;
     }
 
-    return { createNewBoard, deleteBoard, placeOnBoard, checkIfFullBoard, setFullBoard, checkIfThreeInARow };
+    return { createNewBoard, placeOnBoard, checkIfFullBoard, setFullBoard, checkIfThreeInARow };
 })();
 
-function createPlayer(playerName, playerSign) {
-    const name = playerName;
-    const getName = () => name;
+function createPlayer(isHuman, playerSign) {
+    const human = isHuman;
+    const getHumanStatus = () => human;
 
     const sign = playerSign;
     const getSign = () => sign;
 
-    let playerTurn = false;
-    const getPlayerTurn = () => playerTurn;
-    const makePlayerTurn = () => playerTurn = true;
-    const endPlayerTurn = () => playerTurn = false;
+    let turn = false;
+    const getTurn = () => turn;
+    const setTurn = (status) => turn = status;
 
-    return { getName, getSign, getPlayerTurn, makePlayerTurn, endPlayerTurn };
+    const wins = 0;
+    const getWins = () => wins;
+    const incrementWins = () => ++wins;
+
+    return { getHumanStatus, getSign, getTurn, setTurn, getWins, incrementWins };
 }
+
+const gameInfo = (function () {
+    const playerSelectionMode = null;
+    const setPlayerSelectionMode = (mode) => playerSelectionMode = mode;
+    const getPlayerSelectionMode = () => playerSelectionMode;
+
+    const gameMode = null;
+    const setGameMode = (mode) => gameMode = mode;
+    const getGameMode = () => gameMode;
+
+    const difficultyMode = null;
+    const setDifficultyMode = (mode) => difficultyMode = mode;
+    const getDifficultyMode = () => difficultyMode;
+
+    const singleBotSign = null;
+    const setSingleBotSign = (sign) => singleBotSign = sign;
+    const getSingleBotSign = () => singleBotSign;
+
+    const gameRoundsLeft = null;
+    const setGameRoundsLeft = (int) => gameRoundsLeft = int;
+    const getGameRoundsLeft = () => gameRoundsLeft;
+
+    return {
+        setPlayerSelectionMode, getPlayerSelectionMode, setGameMode, getGameMode, setDifficultyMode, getDifficultyMode,
+        setSingleBotSign, getSingleBotSign, setGameRoundsLeft, getGameRoundsLeft
+    }
+})();
+
+const gameFlow = (function () {
+    function beginNewRound() {
+        gameboard.createNewBoard();
+        gameboard.setFullBoard(false);
+    }
+
+    return { beginNewRound };
+})();
 
 const displayController = (function () {
     let currentScreen = null;
     const getCurrentScreen = () => currentScreen;
-
     const screens = document.querySelectorAll('body>div');
     function displayScreen(screenToDisplay) {
         screens.forEach(screen => {
@@ -87,7 +124,20 @@ const displayController = (function () {
     return { getCurrentScreen, showHomeScreen, showMenuScreen, showGameScreen, showRoundEndPanel, showGameEndPanel };
 })();
 
-const events = (function () {
+const setup = (function () {
+    function prepareApp() {
+        setInitialColorTheme();
+        setAllEventListeners();
+        displayController.showHomeScreen();
+    }
+
+    function setInitialColorTheme() {
+        const root = document.documentElement;
+        const rootStyles = getComputedStyle(root);
+        const systemTheme = rootStyles.getPropertyValue('--theme-name');
+        systemTheme == '"LIGHT MODE"' ? root.classList.add('light') : root.classList.add('dark');
+    }
+
     function setAllEventListeners() {
         setHomeScreenEventListeners();
         setMenuScreenEventListeners();
@@ -109,7 +159,40 @@ const events = (function () {
     }
 
     function setMenuScreenEventListeners() {
+        document.querySelector('.menu-screen .exit-button').addEventListener('click', () => {
+            deselectAllMenuScreenBtns();
+            displayController.showHomeScreen();
+        });
 
+        document.querySelector('.start-game-button').addEventListener('click', () => {
+            deselectAllMenuScreenBtns();
+            gameFlow.beginNewRound();
+            displayController.showGameScreen();
+        });
+
+        function deselectAllMenuScreenBtns() {
+            document.querySelectorAll('.menu-screen button').forEach(btn => {
+                btn.classList.remove('clicked');
+            });
+        }
+
+        function setModeEventListeners(selector, gameInfoSetterFunction) {
+            const modeBtns = document.querySelectorAll(selector);
+            modeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    gameInfoSetterFunction(btn.textContent);
+                    modeBtns.forEach(otherBtn => {
+                        otherBtn === btn ? btn.classList.toggle('clicked') : otherBtn.classList.remove('clicked');
+                    });
+                });
+            });
+        }
+
+        setModeEventListeners('.player-selection-container>button', gameInfo.setPlayerSelectionMode);
+        setModeEventListeners('.modes button', gameInfo.setGameMode);
+        setModeEventListeners('.difficulties>button', gameInfo.setDifficultyMode);
+        setModeEventListeners('.ai-bot-sign-selection-container button', gameInfo.setSingleBotSign);
+        setModeEventListeners('.rounds-container button', gameInfo.setGameRoundsLeft);
     }
 
     function setGameScreenEventListeners() {
@@ -124,31 +207,8 @@ const events = (function () {
 
     }
 
-    return { setAllEventListeners };
+    return { prepareApp };
 })();
 
-const gameFlow = (function () {
-    function setInitialColorTheme() {
-        const root = document.documentElement;
-        const rootStyles = getComputedStyle(root);
-        const systemTheme = rootStyles.getPropertyValue('--theme-name');
-        systemTheme == '"LIGHT MODE"' ? root.classList.add('light') : root.classList.add('dark');
-    }
-
-    function beginNewGame() {
-        events.setAllEventListeners();
-        displayController.showHomeScreen();
-        gameboard.createNewBoard();
-    }
-
-    function endGame() {
-        gameboard.deleteBoard();
-        displayController.setCurrentScreen(null);
-        gameboard.setFullBoard(false);
-    }
-
-    return { setInitialColorTheme, beginNewGame, endGame };
-})();
-
-gameFlow.setInitialColorTheme();
+setup.setInitialColorTheme();
 gameFlow.beginNewGame();

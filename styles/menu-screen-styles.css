@@ -83,7 +83,7 @@
 
 .mode-container,
 .difficulty-container,
-.player-one-sign-selection-container,
+.ai-bot-sign-selection-container,
 .rounds-container {
   display: flex;
   flex-direction: column;
@@ -139,11 +139,11 @@
   gap: 20px;
 }
 
-.player-one-sign-selection-container {
+.ai-bot-sign-selection-container {
   grid-row: 5;
 }
 
-.player-one-sign-selection-container > .buttons {
+.ai-bot-sign-selection-container > .buttons {
   display: flex;
   gap: 20px;
 }

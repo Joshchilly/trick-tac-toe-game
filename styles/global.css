@@ -24,6 +24,7 @@
   --text-color: rgb(239, 220, 220);
   --text-notice-color: rgb(161, 160, 160);
   --trick-color: green;
+  --clicked-button-background-color: yellow;
 }
 
 :root.dark {
@@ -36,6 +37,7 @@
   --text-color: rgb(239, 220, 220);
   --text-notice-color: rgb(161, 160, 160);
   --trick-color: green;
+  --clicked-button-background-color: orange;
 }
 
 @media (prefers-color-scheme: light) {
@@ -50,9 +52,8 @@
   }
 }
 
-/* Google fonts symbols */
-.material-symbols-outlined {
-  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+.clicked {
+  background-color: var(--clicked-button-background-color);
 }
 
 .hidden-layout {
@@ -64,6 +65,11 @@
   filter: blur(10px);
   transition: filter 2s ease-in;
   z-index: 1;
+}
+
+/* Google fonts symbols */
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
 .game-screen,
