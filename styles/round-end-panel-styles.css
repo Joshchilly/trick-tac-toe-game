@@ -43,11 +43,11 @@
   display: contents;
 }
 
-.round-end-panel .options-container > button:first-child {
+.round-end-panel .options-container>button:first-child {
   justify-self: flex-end;
 }
 
-.round-end-panel .options-container > button:last-child {
+.round-end-panel .options-container>button:last-child {
   justify-self: flex-start;
 }
 
@@ -92,4 +92,8 @@
   .round-end-panel {
     background-color: var(--background-color);
   }
+}
+
+.draw-image {
+  background-image: url("./assets/images/handshake.jpg");
 }

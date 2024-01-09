@@ -56,10 +56,8 @@
 
 .game-screen .game-grid-container {
   display: grid;
-  grid-template: repeat(3, minmax(100px, 127.8px)) / repeat(
-      3,
-      minmax(100px, 127.8px)
-    );
+  grid-template: repeat(3, minmax(100px, 127.8px)) / repeat(3,
+      minmax(100px, 127.8px));
   grid-auto-flow: column;
   gap: 15px;
   justify-content: center;
@@ -79,4 +77,26 @@
   padding: 20px;
   width: 10vw;
   margin-inline: auto;
+}
+
+.x-hover {
+  content: 'X';
+  font-size: 0.5rem;
+  background-color: yellow;
+}
+
+.o-hover {
+  content: 'O';
+  font-size: 0.5rem;
+  background-color: yellow;
+}
+
+.x-placed {
+  content: 'X';
+  font-size: 0.5rem;
+}
+
+.o-placed {
+  content: 'O';
+  font-size: 0.5rem;
 }
