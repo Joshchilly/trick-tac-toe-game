@@ -20,7 +20,7 @@
 }
 
 :root.light {
-  --theme-name: "LIGHT MODE";
+  --other-theme-name: "DARK MODE";
   --x-color: rgb(101, 227, 66);
   --o-color: rgb(241, 180, 64);
   --background-color: rgb(85, 16, 16);
@@ -33,7 +33,7 @@
 }
 
 :root.dark {
-  --theme-name: "DARK MODE";
+  --other-theme-name: "LIGHT MODE";
   --x-color: blue;
   --o-color: orange;
   --background-color: rgb(100, 22, 100);
@@ -47,14 +47,18 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    --theme-name: "LIGHT MODE";
+    --other-theme-name: "DARK MODE";
   }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --theme-name: "DARK MODE";
+    --other-theme-name: "LIGHT MODE";
   }
+}
+
+button {
+  cursor: pointer;
 }
 
 .clicked {

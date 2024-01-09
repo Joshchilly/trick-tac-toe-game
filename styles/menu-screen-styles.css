@@ -75,7 +75,6 @@ body::-webkit-scrollbar {
   color: var(--text-color);
   padding: 10px;
   padding-inline: 17px;
-  cursor: pointer;
 }
 
 .menu-screen .header {
@@ -113,7 +112,7 @@ body::-webkit-scrollbar {
   /* Styles for fade in effect */
   opacity: 0;
   max-height: 0;
-  transition: opacity 1.2s ease-in-out, max-height 1.2s ease-in-out;
+  transition: opacity 0.9s ease-in-out, max-height 1.2s ease-in-out;
 }
 
 .player-selection-container {

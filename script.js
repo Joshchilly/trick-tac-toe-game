@@ -2,18 +2,18 @@ const gameboard = (function () {
     let board = null;
     function createNewBoard() {
         board = new Array(9).fill(-1);
-        document.querySelectorAll('.game-grid-container div').forEach(space => {
-            space.classList.remove('x-placed', 'o-placed');
+        document.querySelectorAll('.game-grid-container div').forEach(spaceDiv => {
+            spaceDiv.classList.remove('x-placed', 'o-placed');
         });
     }
 
-    function placeOnBoard(space, sign) {
-        board[space] = sign;
-        sign === 'X' ? space.classList.add('x-placed') : space.classList.add('o-placed');
+    function placeOnBoard(spaceIndex, spaceDiv, sign) {
+        board[spaceIndex] = sign;
+        sign === 'X' ? spaceDiv.classList.add('x-placed') : spaceDiv.classList.add('o-placed');
     }
 
-    function spaceIsFree(space) {
-        return board[space] === -1;
+    function spaceIsFree(spaceIndex) {
+        return board[spaceIndex] === -1;
     }
 
     const checkIfTie = () => board.every(value => value != -1);
@@ -32,16 +32,17 @@ const gameboard = (function () {
         ];
 
         // Check if any row in sets is contains only X or only O
+        let winningSign = null;
         sets.forEach(set => {
             const [one, two, three] = set;
             if (board[one] === board[two] && board[two] === board[three]) {
                 if (board[one] != -1) {
-                    return board[one];
+                    winningSign = board[one];
                 }
             }
-        })
+        });
 
-        return -1; // No 3 in a row
+        return winningSign;
     }
 
     return { createNewBoard, placeOnBoard, spaceIsFree, checkIfTie, checkIfThreeInARowAndSign };
@@ -58,7 +59,7 @@ function createPlayer(humanStatus, playerSign) {
     const getTurn = () => turn;
     const setTurn = (status) => turn = status;
 
-    const wins = 0;
+    let wins = 0;
     const getWins = () => wins;
     const incrementWins = () => ++wins;
 
@@ -102,9 +103,6 @@ const gameFlow = (function () {
 
     function beginNewGame() {
         ties = 0;
-        if (gameInfo.playerSelectionMode() === "PLAYER VS AI BOT") {
-            AITurnExecuting = true;
-        }
         roundsLeft = gameInfo.getGameRounds();
 
         switch (gameInfo.getPlayerSelectionMode()) {
@@ -147,19 +145,26 @@ const gameFlow = (function () {
         gameboard.createNewBoard();
         playerX.setTurn(true);
         updateTurnNotice('X');
-        if (!playerX.isHuman() && gameInfo.getPlayerSelectionMode() === "PLAYER VS AI BOT") {
+        if (!playerX.isHuman()) {
             AITurnExecuting = true;
-            setTimeout(function () { AITurnExecuting = false; }, 2000);
+            setTimeout(function () {
+                AITurnExecuting = false;
+                switchTurns();
+            }, 2000);
         }
 
-        document.querySelector('.x-sign .score').textContent = playerX.getWins();
-        document.querySelector('.o-sign .score').textContent = playerO.getWins();
+        if (gameInfo.getGameRounds() > 1) {
+            document.querySelector('.round-count').textContent = `ROUND ${gameInfo.getGameRounds() - roundsLeft + 1}`;
+        }
+
+        document.querySelector('.player-x .score').textContent = playerX.getWins();
+        document.querySelector('.player-o .score').textContent = playerO.getWins();
         document.querySelector('.ties .score').textContent = ties;
     }
 
     function endRoundIfOver() {
         const sign = gameboard.checkIfThreeInARowAndSign();
-        if (sign != -1) { // One of the players won
+        if (sign != null) { // One of the players won
             sign === 'X' ? (() => {
                 playerX.incrementWins();
                 endRound('X');
@@ -193,29 +198,56 @@ const gameFlow = (function () {
             }
             setTimeout(() => {
                 displayController.showRoundEndPanel();
-            }, 1000);
+            }, 200);
         }
     }
 
     function endGame(winner) {
-        document.querySelector('.game-end-panel .sign').textContent = winner;
-        document.querySelector('.game-end-panel .x-sign .score').textContent = playerX.getWins();
-        document.querySelector('.game-end-panel .o-sign .score').textContent = playerO.getWins();
+        winner != '' ? document.querySelector('.game-end-panel .announcement .sign').textContent = winner :
+            document.querySelector('.game-end-panel .announcement').textContent = "IT'S A DRAW";
+        document.querySelector('.game-end-panel .player-x .score').textContent = playerX.getWins();
+        document.querySelector('.game-end-panel .player-o .score').textContent = playerO.getWins();
         document.querySelector('.game-end-panel .ties .score').textContent = ties;
         setTimeout(() => {
             displayController.showGameEndPanel();
-        }, 1000);
+        }, 200);
     }
 
     function switchTurns() {
         if (playerX.getTurn()) {
-            playerX.setTurn(false);
-            playerO.setTurn(true);
-            updateTurnNotice('O');
+            if (!playerO.isHuman()) {
+                AITurnExecuting = true;
+                updateTurnNotice('O');
+                playerX.setTurn(false);
+                playerO.setTurn(true);
+                setTimeout(function () {
+                    AITurnExecuting = false;
+                    playerX.setTurn(true);
+                    playerO.setTurn(false);
+                    updateTurnNotice('X');
+                }, 2000);
+            } else {
+                playerX.setTurn(false);
+                playerO.setTurn(true);
+                updateTurnNotice('O');
+            }
         } else {
-            playerX.setTurn(true);
-            playerO.setTurn(false);
-            updateTurnNotice('X');
+            if (!playerX.isHuman()) {
+                AITurnExecuting = true;
+                updateTurnNotice('X');
+                playerX.setTurn(true);
+                playerO.setTurn(false);
+                setTimeout(function () {
+                    AITurnExecuting = false;
+                    playerX.setTurn(false);
+                    playerO.setTurn(true);
+                    updateTurnNotice('O');
+                }, 2000);
+            } else {
+                playerX.setTurn(true);
+                playerO.setTurn(false);
+                updateTurnNotice('X');
+            }
         }
     }
 
@@ -240,6 +272,7 @@ const displayController = (function () {
                 }
             }
         });
+        screenToDisplay.classList.remove('game-screen-blur');
         screenToDisplay.classList.remove('hidden-layout');
     }
 
@@ -409,7 +442,7 @@ const setup = (function () {
             displayController.showGameScreen();
             deselectAllMenuScreenBtns();
             hideMenuOptionsBelowPlayerSelection();
-            gameFlow.beginNewRound();
+            gameFlow.beginNewGame();
         });
     }
 
@@ -419,11 +452,12 @@ const setup = (function () {
         });
 
         document.querySelector('.game-screen .restart-button').addEventListener('click', () => {
-            displayController.showMenuScreen();
+            displayController.showGameScreen();
+            gameFlow.beginNewGame();
         });
 
         document.querySelectorAll('.game-grid-container div').forEach(space => {
-            space.addEventListener('mouseover', () => {
+            space.addEventListener('mousemove', () => {
                 if (!gameFlow.AITurnIsExecuting()) {
                     if (gameFlow.getCurrentTurnSign() === 'X') {
                         space.classList.add('x-hover')
@@ -434,13 +468,13 @@ const setup = (function () {
             });
 
             space.addEventListener('mouseleave', () => {
-                space.classList.remove('x-hover,', 'o-hover');
+                space.classList.remove('x-hover', 'o-hover');
             });
 
             space.addEventListener('click', () => {
-                const spaceIndex = space.className.charAt(className.length - 1);
+                const spaceIndex = space.className.charAt(space.className.length - 9);
                 if (gameboard.spaceIsFree(spaceIndex) && !gameFlow.AITurnIsExecuting()) {
-                    gameboard.placeOnBoard(spaceIndex, gameFlow.getCurrentTurnSign());
+                    gameboard.placeOnBoard(spaceIndex, space, gameFlow.getCurrentTurnSign());
                     gameFlow.switchTurns();
                     gameFlow.endRoundIfOver();
                 }
@@ -454,10 +488,12 @@ const setup = (function () {
         });
 
         document.querySelector('.round-end-panel .restart-button').addEventListener('click', () => {
+            displayController.showGameScreen();
             gameFlow.beginNewGame();
         });
 
         document.querySelector('.round-end-panel .next-round-button').addEventListener('click', () => {
+            displayController.showGameScreen();
             gameFlow.beginNewRound();
         });
     }
@@ -468,6 +504,7 @@ const setup = (function () {
         });
 
         document.querySelector('.game-end-panel .restart-button').addEventListener('click', () => {
+            displayController.showGameScreen();
             gameFlow.beginNewGame();
         });
     }

@@ -1,13 +1,27 @@
 .game-screen {
   background-color: var(--background-color);
   color: var(--text-color);
-  height: 100vh;
+  height: 50vh;
   width: 100vw;
 }
 
 @media (orientation: landscape) {
   .game-screen {
     height: auto;
+  }
+}
+
+@media (max-width: 500px) {
+  .game-grid-container>div {
+    font-size: 6rem;
+  }
+
+  .scoresheet-container {
+    margin-bottom: 70px;
+  }
+
+  .turn-notice {
+    margin-top: 70px;
   }
 }
 
@@ -31,14 +45,12 @@
   color: var(--text-color);
   padding: 10px;
   padding-inline: 17px;
-  cursor: pointer;
 }
 
 .game-screen .scoresheet-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 25px;
   width: 155px;
   margin-inline: auto;
   margin-top: 15px;
@@ -46,6 +58,11 @@
   padding-bottom: 25px;
   font-size: 1.2531rem;
   background-color: var(--button-panel-background-color);
+}
+
+.game-screen .round-count {
+  margin-top: 3px;
+  margin-bottom: 25px;
 }
 
 .game-screen .status-container {
@@ -63,7 +80,7 @@
   justify-content: center;
   justify-items: center;
   align-items: center;
-  width: 100vw;
+  width: 95vw;
   margin-inline: auto;
   margin-top: 40px;
   margin-bottom: 40px;
@@ -80,23 +97,28 @@
 }
 
 .x-hover {
-  content: 'X';
-  font-size: 0.5rem;
   background-color: yellow;
 }
 
 .o-hover {
-  content: 'O';
-  font-size: 0.5rem;
-  background-color: yellow;
+  background-color: rgb(8, 191, 57);
 }
 
 .x-placed {
-  content: 'X';
-  font-size: 0.5rem;
+  background-color: rgb(238, 188, 5);
 }
 
 .o-placed {
-  content: 'O';
-  font-size: 0.5rem;
+  background-color: rgb(10, 141, 229);
+}
+
+.game-grid-container>div {
+  border: 3px solid black;
+  box-sizing: border-box;
+  width: 92%;
+  height: 92%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 6rem;
 }

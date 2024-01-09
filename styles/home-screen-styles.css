@@ -7,10 +7,6 @@
   color: var(--text-color);
 }
 
-.home-screen button {
-  cursor: pointer;
-}
-
 .home-screen>.grid-container {
   display: grid;
   grid-auto-flow: column;
@@ -36,7 +32,7 @@
     font-size: 3.4rem;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
   }
 
   .home-screen>.grid-container {
@@ -86,16 +82,18 @@
 .home-screen .start-button {
   color: var(--button-background-color);
   height: 10vh;
-
   font-size: 1.7rem;
 }
 
 .home-screen .theme-button-container {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-around;
+  gap: 14px;
   background-color: var(--button-background-color);
-  padding: 14px;
+  padding: 18px;
+  width: 277px;
+  font-size: 1.2rem;
 }
 
 .home-screen .theme-button {
@@ -103,7 +101,10 @@
 }
 
 .home-screen .theme-button::after {
-  content: var(--theme-name);
-  font-size: 0.67rem;
+  content: var(--other-theme-name);
+  padding: 5px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  font-size: 0.9rem;
   display: flex;
 }

@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: center;
   height: 100vh;
+  width: 100vw;
 
   /* Styles for showing the round end panel over the game screen */
   position: fixed;

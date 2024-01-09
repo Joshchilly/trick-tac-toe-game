@@ -3,7 +3,7 @@
   grid-template: 1fr 3fr 1fr / repeat(2, minmax(120px, 1fr));
   place-items: center;
   width: 100vw;
-  height: 50vh;
+  height: 60vh;
   background-color: var(--background-color);
 
   /* Styles for showing the round end panel over the game screen */
