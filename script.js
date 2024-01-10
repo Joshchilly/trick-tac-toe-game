@@ -45,7 +45,17 @@ const gameboard = (function () {
         return winningSign;
     }
 
-    return { createNewBoard, placeOnBoard, spaceIsFree, checkIfTie, checkIfThreeInARowAndSign };
+    function randomlySwitchFilledSpaceSign() {
+        const randomIndex = Math.floor(Math.random() * 9);
+        if (board[randomIndex] === -1) {
+            randomlySwitchFilledSpaceSign();
+        } else {
+            gameboard[randomIndex] = gameboard[randomIndex] === 'X' ? 'O' : 'X';
+            return randomIndex;
+        }
+    }
+
+    return { createNewBoard, placeOnBoard, spaceIsFree, checkIfTie, checkIfThreeInARowAndSign, randomlySwitchFilledSpaceSign };
 })();
 
 function createPlayer(humanStatus, playerSign) {
@@ -62,8 +72,9 @@ function createPlayer(humanStatus, playerSign) {
     let wins = 0;
     const getWins = () => wins;
     const incrementWins = () => ++wins;
+    const decrementWins = () => --wins;
 
-    return { isHuman, getSign, getTurn, setTurn, getWins, incrementWins };
+    return { isHuman, getSign, getTurn, setTurn, getWins, incrementWins, decrementWins };
 }
 
 const gameInfo = (function () {
@@ -163,24 +174,26 @@ const gameFlow = (function () {
     }
 
     function endRoundIfOver() {
-        const sign = gameboard.checkIfThreeInARowAndSign();
-        if (sign != null) { // One of the players won
-            sign === 'X' ? (() => {
-                playerX.incrementWins();
-                endRound('X');
-            })() : (() => {
-                playerO.incrementWins();
-                endRound('O');
-            })();
-        }
-
-        if (gameboard.checkIfTie()) {
-            ties++;
-            endRound('');
+        if (gameboard.checkIfThreeInARowAndSign() != null || gameboard.checkIfTie()) {
+            const sign = trick();
+            setTimeout(() => {
+                endRound(sign);
+            }, 5300);
         }
     }
 
     function endRound(winner) {
+        switch (winner) {
+            case 'X':
+                playerX.incrementWins();
+                break;
+            case 'O':
+                playerO.incrementWins();
+                break;
+            case null:
+                ties++;
+        }
+
         roundsLeft--;
         if (roundsLeft === 0) {
             endGame(winner);
@@ -253,7 +266,33 @@ const gameFlow = (function () {
 
     const getCurrentTurnSign = () => playerX.getTurn() ? 'X' : 'O';
 
-    const updateTurnNotice = (sign) => document.querySelector('.turn-notice span').textContent = sign;
+    const updateTurnNotice = (sign) => document.querySelector('.turn-notice .sign').textContent = sign;
+
+    function trick() {
+        setup.deactivateGridEventListeners();
+        document.querySelector('.game-grid-container').classList.add('wobble');
+        setTimeout(() => { setup.activateGridEventListeners(); }, 6000);
+        const switchedIndex = gameboard.randomlySwitchFilledSpaceSign();
+        for (node of document.querySelectorAll('.game-grid-container div')) {
+            if (node.classList.contains(`grid-space-${switchedIndex}`)) {
+                setTimeout(() => {
+                    document.querySelector('.game-grid-container').classList.remove('wobble');
+                    node.classList.add('tricked', 'bubble');
+                    if (node.classList.contains('x-placed')) {
+                        node.classList.remove('x-placed');
+                        node.classList.add('o-placed')
+                    } else { // Node contains class 'o-placed'
+                        node.classList.remove('o-placed');
+                        node.classList.add('x-placed')
+                    }
+                }, 2000);
+                setTimeout(() => { node.classList.remove('tricked', 'bubble') }, 4000);
+                break;
+            }
+        }
+
+        return gameboard.checkIfThreeInARowAndSign();
+    }
 
     return { AITurnIsExecuting, beginNewGame, beginNewRound, endRoundIfOver, switchTurns, getCurrentTurnSign };
 })();
@@ -297,6 +336,44 @@ const setup = (function () {
         const rootStyles = getComputedStyle(root);
         const systemTheme = rootStyles.getPropertyValue('--theme-name');
         systemTheme == '"LIGHT MODE"' ? root.classList.add('light') : root.classList.add('dark');
+    }
+
+    function activateGridEventListeners() {
+        document.querySelectorAll('.game-grid-container div').forEach(space => {
+            space.addEventListener('mousemove', gridMouseMoveHandler);
+            space.addEventListener('mouseleave', gridMouseLeaveHandler);
+            space.addEventListener('click', gridClickHandler);
+        });
+    };
+
+    function deactivateGridEventListeners() {
+        document.querySelectorAll('.game-grid-container div').forEach(space => {
+            space.removeEventListener('mousemove', gridMouseMoveHandler);
+            space.removeEventListener('click', gridClickHandler);
+        });
+    }
+
+    function gridMouseMoveHandler() {
+        if (!gameFlow.AITurnIsExecuting()) {
+            if (gameFlow.getCurrentTurnSign() === 'X') {
+                this.classList.add('x-hover')
+            } else {
+                this.classList.add('o-hover');
+            }
+        }
+    }
+
+    function gridMouseLeaveHandler() {
+        this.classList.remove('x-hover', 'o-hover');
+    }
+
+    function gridClickHandler() {
+        const spaceIndex = this.className.charAt(this.className.length - 9);
+        if (gameboard.spaceIsFree(spaceIndex) && !gameFlow.AITurnIsExecuting()) {
+            gameboard.placeOnBoard(spaceIndex, this, gameFlow.getCurrentTurnSign());
+            gameFlow.switchTurns();
+            gameFlow.endRoundIfOver();
+        }
     }
 
     function setAllEventListeners() {
@@ -456,30 +533,7 @@ const setup = (function () {
             gameFlow.beginNewGame();
         });
 
-        document.querySelectorAll('.game-grid-container div').forEach(space => {
-            space.addEventListener('mousemove', () => {
-                if (!gameFlow.AITurnIsExecuting()) {
-                    if (gameFlow.getCurrentTurnSign() === 'X') {
-                        space.classList.add('x-hover')
-                    } else {
-                        space.classList.add('o-hover');
-                    }
-                }
-            });
-
-            space.addEventListener('mouseleave', () => {
-                space.classList.remove('x-hover', 'o-hover');
-            });
-
-            space.addEventListener('click', () => {
-                const spaceIndex = space.className.charAt(space.className.length - 9);
-                if (gameboard.spaceIsFree(spaceIndex) && !gameFlow.AITurnIsExecuting()) {
-                    gameboard.placeOnBoard(spaceIndex, space, gameFlow.getCurrentTurnSign());
-                    gameFlow.switchTurns();
-                    gameFlow.endRoundIfOver();
-                }
-            });
-        });
+        activateGridEventListeners();
     }
 
     function setRoundEndScreenEventListeners() {
@@ -509,7 +563,7 @@ const setup = (function () {
         });
     }
 
-    return { prepareApp };
+    return { prepareApp, activateGridEventListeners, deactivateGridEventListeners };
 })();
 
 const AIBot = (function () {
