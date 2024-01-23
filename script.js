@@ -143,10 +143,6 @@ const gameFlow = (function () {
                     const randomIndex = Math.floor(Math.random() * symbols.length);
                     createPlayersByHumanSymbol(symbols[randomIndex]);
                 }
-                break;
-            case "AI BOT VS AI BOT":
-                playerX = createPlayer(false, 'X');
-                playerO = createPlayer(false, 'O');
         }
 
         beginNewRound();
@@ -271,9 +267,11 @@ const gameFlow = (function () {
     function trick() {
         setup.deactivateGridEventListeners();
         document.querySelector('.game-grid-container').classList.add('wobble');
+        document.querySelector('.game-screen .exit-button').classList.add('hidden-layout');
+        document.querySelector('.game-screen .restart-button').classList.add('hidden-layout');
         setTimeout(() => { setup.activateGridEventListeners(); }, 6000);
         const switchedIndex = gameboard.randomlySwitchFilledSpaceSign();
-        for (node of document.querySelectorAll('.game-grid-container div')) {
+        for (node of document.querySelectorAll('.game-grid-container>div')) {
             if (node.classList.contains(`grid-space-${switchedIndex}`)) {
                 setTimeout(() => {
                     document.querySelector('.game-grid-container').classList.remove('wobble');
@@ -287,6 +285,10 @@ const gameFlow = (function () {
                     }
                 }, 2000);
                 setTimeout(() => { node.classList.remove('tricked', 'bubble') }, 4000);
+                setTimeout(() => {
+                    document.querySelector('.game-screen .exit-button').classList.remove('hidden-layout');
+                    document.querySelector('.game-screen .restart-button').classList.remove('hidden-layout');
+                }, 5500);
                 break;
             }
         }

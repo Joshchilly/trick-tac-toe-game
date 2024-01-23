@@ -165,7 +165,7 @@
 }
 
 .bubble {
-  animation: bubbleIn 1s ease-in;
+  animation: wobble 2s infinite, bubbleIn 1s ease-in;
 }
 
 @keyframes bubbleIn {
