@@ -86,6 +86,7 @@
   .round-end-panel button {
     padding: 10px;
     padding-inline: 15;
+    font-size: 0.75rem;
   }
 }
 

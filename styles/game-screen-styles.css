@@ -1,14 +1,8 @@
 .game-screen {
   background-color: var(--background-color);
   color: var(--text-color);
-  height: 50vh;
+  height: auto;
   width: 100vw;
-}
-
-@media (orientation: landscape) {
-  .game-screen {
-    height: auto;
-  }
 }
 
 @media (max-width: 650px) {
@@ -22,7 +16,7 @@
 
   .turn-notice {
     margin-top: 70px;
-    width: 12vw;
+    width: 18vw !important;
     gap: 10px;
   }
 }
@@ -102,7 +96,8 @@
 .game-screen .turn-notice {
   display: flex;
   justify-content: center;
-  margin-bottom: 15px;
+  position: relative;
+  bottom: 20px;
   background-color: var(--button-panel-background-color);
   padding: 20px;
   width: 7vw;

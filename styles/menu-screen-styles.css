@@ -16,7 +16,7 @@ body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .menu-screen .grid-container {
@@ -27,7 +27,6 @@ body::-webkit-scrollbar {
   row-gap: 45px;
   justify-content: center;
   justify-items: center;
-  height: 145vh;
   place-items: center;
 }
 
@@ -37,34 +36,12 @@ body::-webkit-scrollbar {
 
 @media (orientation: landscape) and (max-height: 500px) {
   .menu-screen .grid-container {
-    height: 300vh;
+    min-height: 300vh;
     grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
   }
 
   .menu-screen {
-    min-height: 100vw;
-    margin-top: 20px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .menu-screen .grid-container {
-    height: 180vh;
-    grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
-  }
-}
-
-@media (max-width: 500px) {
-  .menu-screen .grid-container {
-    height: 200vh;
-    grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
-  }
-}
-
-@media (max-width: 390px) {
-  .menu-screen .grid-container {
-    height: 210vh;
-    grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
+    margin-top: 10px;
   }
 }
 
@@ -174,11 +151,25 @@ body::-webkit-scrollbar {
 }
 
 .menu-screen .start-game-button {
-  grid-row: 7;
   padding-inline: 38px;
   width: 350px;
   justify-self: center;
   position: relative;
-  padding-top: 18px;
-  padding-bottom: 18px;
+  padding: 12px 0px 12px 0px;
+  margin-top: -50px;
+}
+
+@media (max-width: 600px) {
+  .menu-screen .start-game-button {
+    padding-inline: 38px;
+    width: 350px;
+    justify-self: center;
+    position: relative;
+    padding: 12px 0px 12px 0px;
+    margin-top: 10px;
+  }
+
+  .menu-screen .grid-container {
+    height: 130vh;
+  }
 }
