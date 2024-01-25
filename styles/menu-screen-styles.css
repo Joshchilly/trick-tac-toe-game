@@ -77,13 +77,14 @@ body::-webkit-scrollbar {
 
 .menu-screen .header {
   grid-row: 1;
-  width: 84vw;
 }
 
 .menu-screen .exit-button {
   grid-row: 1;
   padding: 5px;
   padding-inline: 10px;
+  position: relative;
+  right: 40.14vw;
 }
 
 .menu-screen .header>.signs {

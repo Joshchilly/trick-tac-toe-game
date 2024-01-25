@@ -591,6 +591,9 @@ const setup = (function () {
         const roundsNode = document.querySelector('.rounds-container');
         document.querySelectorAll('.player-selection-container>button').forEach(btn => {
             btn.addEventListener('click', () => {
+                document.querySelectorAll('.modes button, .difficulties button, .ai-bot-sign-selection-container button, .round-selection-container button').forEach(btn => {
+                    btn.classList.remove('clicked');
+                });
                 hideMenuOptionsBelowPlayerSelection();
                 setTimeout(() => {
                     document.querySelector('.mode-container').classList.remove('hidden-layout');
