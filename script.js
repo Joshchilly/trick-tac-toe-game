@@ -623,14 +623,12 @@ const setup = (function () {
         function setCSSForPlayerVsAI() {
             roundsNode.style.cssText = "grid-row: 6;";
             gridContainer.style.cssText = "height: 145vh; grid-template-rows: 0.5fr 0.5fr 3fr 2fr 3fr 2fr 1fr;";
-            document.documentElement.style.cssText = "overflow: auto;";
             document.querySelector('.start-game-button').style.cssText = "margin-bottom: 35px; top: 0px;";
         }
 
         function setCSSForNotPlayerVsAI() {
             roundsNode.style.cssText = "grid-row: 4;";
             gridContainer.style.cssText = "height: 105vh;";
-            document.documentElement.style.cssText = "overflow: hidden;";
             document.querySelector('.start-game-button').style.cssText = "top: -85px;";
         }
 
