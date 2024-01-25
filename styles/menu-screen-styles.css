@@ -56,14 +56,14 @@ body::-webkit-scrollbar {
 
 @media (max-width: 500px) {
   .menu-screen .grid-container {
-    height: 180vh;
+    height: 200vh;
     grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
   }
 }
 
 @media (max-width: 390px) {
   .menu-screen .grid-container {
-    height: 200vh;
+    height: 210vh;
     grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
   }
 }
