@@ -1,5 +1,7 @@
 const gameboard = (function () {
     let board = null;
+    const getBoard = () => board;
+
     function createNewBoard() {
         board = new Array(9).fill(-1);
         document.querySelectorAll('.game-grid-container div').forEach(spaceDiv => {
@@ -18,7 +20,7 @@ const gameboard = (function () {
 
     const checkIfTie = () => board.every(value => value != -1);
 
-    function checkIfThreeInARowAndSign() {
+    function checkIfThreeInARowAndSigns() {
         // Define the collection of rows on the board 
         const sets = [
             [0, 1, 2],
@@ -32,30 +34,27 @@ const gameboard = (function () {
         ];
 
         // Check if any row in sets is contains only X or only O
-        let winningSign = null;
+        let winningSigns = [];
         sets.forEach(set => {
             const [one, two, three] = set;
             if (board[one] === board[two] && board[two] === board[three]) {
                 if (board[one] != -1) {
-                    winningSign = board[one];
+                    winningSigns.push(board[one]);
                 }
             }
         });
 
-        return winningSign;
+        return winningSigns;
     }
 
     function randomlySwitchFilledSpaceSign() {
         const randomIndex = Math.floor(Math.random() * 9);
-        if (board[randomIndex] === -1) {
-            randomlySwitchFilledSpaceSign();
-        } else {
-            gameboard[randomIndex] = gameboard[randomIndex] === 'X' ? 'O' : 'X';
-            return randomIndex;
-        }
+        const randomSign = Math.random() < 0.5 ? 'X' : 'O';
+        board[randomIndex] = randomSign;
+        return [randomIndex, randomSign];
     }
 
-    return { createNewBoard, placeOnBoard, spaceIsFree, checkIfTie, checkIfThreeInARowAndSign, randomlySwitchFilledSpaceSign };
+    return { getBoard, createNewBoard, placeOnBoard, spaceIsFree, checkIfTie, checkIfThreeInARowAndSigns, randomlySwitchFilledSpaceSign };
 })();
 
 function createPlayer(humanStatus, playerSign) {
@@ -90,9 +89,9 @@ const gameInfo = (function () {
     const setDifficultyMode = (mode) => difficultyMode = mode;
     const getDifficultyMode = () => difficultyMode;
 
-    let singleBotSign = null;
-    const setSingleBotSign = (sign) => singleBotSign = sign;
-    const getSingleBotSign = () => singleBotSign;
+    let botSign = null;
+    const setBotSign = (sign) => botSign = sign;
+    const getBotSign = () => botSign;
 
     let gameRounds = null;
     const setGameRounds = (int) => gameRounds = int;
@@ -100,14 +99,14 @@ const gameInfo = (function () {
 
     return {
         setPlayerSelectionMode, getPlayerSelectionMode, setGameMode, getGameMode, setDifficultyMode, getDifficultyMode,
-        setSingleBotSign, getSingleBotSign, setGameRounds, getGameRounds
+        setBotSign, getBotSign, setGameRounds, getGameRounds
     }
 })();
 
 const gameFlow = (function () {
     let playerX = null;
     let playerO = null;
-    let ties = null;
+    let ties = 0;
     let AITurnExecuting = false;
     const AITurnIsExecuting = () => AITurnExecuting;
     let roundsLeft = null;
@@ -128,20 +127,21 @@ const gameFlow = (function () {
                         playerX = createPlayer(true, 'X');
                     } else {
                         // humanSymbol === 'O'
-                        playerX = createPlayer(false, 'X');
                         playerO = createPlayer(true, 'O');
+                        playerX = createPlayer(false, 'X');
                     }
                 }
 
-                if (gameInfo.getSingleBotSign() === 'X') {
+                if (gameInfo.getBotSign() === 'X') {
                     createPlayersByHumanSymbol('O');
-                } else if (gameInfo.getSingleBotSign() === 'O') {
+                } else if (gameInfo.getBotSign() === 'O') {
                     createPlayersByHumanSymbol('X');
                 } else {
-                    // gameInfo.getSingleBotSign() === 'RANDOM'
+                    // gameInfo.getBotSign() === 'RANDOM'
                     const symbols = ['X', 'O'];
                     const randomIndex = Math.floor(Math.random() * symbols.length);
                     createPlayersByHumanSymbol(symbols[randomIndex]);
+                    gameInfo.setBotSign(symbols[1 - randomIndex]);
                 }
         }
 
@@ -155,9 +155,10 @@ const gameFlow = (function () {
         if (!playerX.isHuman()) {
             AITurnExecuting = true;
             setTimeout(function () {
+                aiBot.makeMove();
                 AITurnExecuting = false;
                 switchTurns();
-            }, 2000);
+            }, 1000);
         }
 
         if (gameInfo.getGameRounds() > 1) {
@@ -170,40 +171,59 @@ const gameFlow = (function () {
     }
 
     function endRoundIfOver() {
-        if (gameboard.checkIfThreeInARowAndSign() != null || gameboard.checkIfTie()) {
-            const sign = trick();
-            setTimeout(() => {
-                endRound(sign);
-            }, 5300);
+        if (gameboard.checkIfThreeInARowAndSigns().length != 0 || gameboard.checkIfTie()) {
+            if (gameInfo.getGameMode() === "TRICK") {
+                const signs = trick();
+                setTimeout(() => {
+                    endRound(signs);
+                }, 5500);
+            } else { // Game mode is REGULAR
+                setup.deactivateGridEventListeners();
+                setTimeout(() => {
+                    endRound(gameboard.checkIfThreeInARowAndSigns());
+                }, 800);
+                setTimeout(() => {
+                    setup.activateGridEventListeners();
+                }, 1100);
+            }
+
+            return true;
         }
+
+        return false;
     }
 
-    function endRound(winner) {
-        switch (winner) {
-            case 'X':
-                playerX.incrementWins();
-                break;
-            case 'O':
-                playerO.incrementWins();
-                break;
-            case null:
-                ties++;
-        }
+    function endRound(signs) {
+        // There could be multiple wins for either side so need to loop through the signs array
+        signs.forEach(sign => {
+            switch (sign) {
+                case 'X':
+                    playerX.incrementWins();
+                    break;
+                case 'O':
+                    playerO.incrementWins();
+            }
+        });
 
         roundsLeft--;
         if (roundsLeft === 0) {
-            endGame(winner);
+            endGame();
         } else {
             const announcement = document.querySelector('.round-end-panel .announcement');
             const sign = document.querySelector('.round-end-panel .sign');
-            if (winner != '') { //Someone won
+            if (signs.length != 0) { //Someone won
                 announcement.textContent = "THE WINNING PLAYER IS";
-                sign.classList.remove('draw-image');
-                sign.textContent = winner;
+                if (signs.includes('X') && signs.includes('O')) {
+                    sign.textContent = 'X AND O';
+                } else if (signs.includes('X')) {
+                    sign.textContent = 'X';
+                } else {
+                    sign.textContent = 'O';
+                }
             } else { // It's a draw
                 announcement.textContent = "IT'S A DRAW";
-                sign.classList.add('draw-image');
                 sign.textContent = '';
+                ties++;
             }
             setTimeout(() => {
                 displayController.showRoundEndPanel();
@@ -211,9 +231,15 @@ const gameFlow = (function () {
         }
     }
 
-    function endGame(winner) {
-        winner != '' ? document.querySelector('.game-end-panel .announcement .sign').textContent = winner :
+    function endGame() {
+        if (playerX.getWins() > playerO.getWins()) {
+            document.querySelector('.game-end-panel .announcement .sign').textContent = 'X';
+        } else if (playerX.getWins() < playerO.getWins()) {
+            document.querySelector('.game-end-panel .announcement .sign').textContent = 'O';
+        } else {
+            ties++;
             document.querySelector('.game-end-panel .announcement').textContent = "IT'S A DRAW";
+        }
         document.querySelector('.game-end-panel .player-x .score').textContent = playerX.getWins();
         document.querySelector('.game-end-panel .player-o .score').textContent = playerO.getWins();
         document.querySelector('.game-end-panel .ties .score').textContent = ties;
@@ -230,11 +256,13 @@ const gameFlow = (function () {
                 playerX.setTurn(false);
                 playerO.setTurn(true);
                 setTimeout(function () {
+                    aiBot.makeMove();
                     AITurnExecuting = false;
                     playerX.setTurn(true);
                     playerO.setTurn(false);
                     updateTurnNotice('X');
-                }, 2000);
+                    gameFlow.endRoundIfOver(); // Check if the AI's move ended the round
+                }, 500);
             } else {
                 playerX.setTurn(false);
                 playerO.setTurn(true);
@@ -247,11 +275,13 @@ const gameFlow = (function () {
                 playerX.setTurn(true);
                 playerO.setTurn(false);
                 setTimeout(function () {
+                    aiBot.makeMove();
                     AITurnExecuting = false;
                     playerX.setTurn(false);
                     playerO.setTurn(true);
                     updateTurnNotice('O');
-                }, 2000);
+                    gameFlow.endRoundIfOver(); // Check if the AI's move ended the round
+                }, 500);
             } else {
                 playerX.setTurn(true);
                 playerO.setTurn(false);
@@ -266,37 +296,145 @@ const gameFlow = (function () {
 
     function trick() {
         setup.deactivateGridEventListeners();
-        document.querySelector('.game-grid-container').classList.add('wobble');
         document.querySelector('.game-screen .exit-button').classList.add('hidden-layout');
         document.querySelector('.game-screen .restart-button').classList.add('hidden-layout');
-        setTimeout(() => { setup.activateGridEventListeners(); }, 6000);
-        const switchedIndex = gameboard.randomlySwitchFilledSpaceSign();
+        document.querySelector('.game-grid-container').classList.add('wobble');
+        setTimeout(() => {
+            setup.activateGridEventListeners();
+            document.querySelector('.game-screen .exit-button').classList.add('hidden-layout');
+            document.querySelector('.game-screen .restart-button').classList.add('hidden-layout');
+        }, 6300);
+        const [switchedIndex, randomSign] = gameboard.randomlySwitchFilledSpaceSign();
         for (node of document.querySelectorAll('.game-grid-container>div')) {
             if (node.classList.contains(`grid-space-${switchedIndex}`)) {
                 setTimeout(() => {
                     document.querySelector('.game-grid-container').classList.remove('wobble');
                     node.classList.add('tricked', 'bubble');
-                    if (node.classList.contains('x-placed')) {
-                        node.classList.remove('x-placed');
-                        node.classList.add('o-placed')
-                    } else { // Node contains class 'o-placed'
-                        node.classList.remove('o-placed');
-                        node.classList.add('x-placed')
-                    }
+                    const classToAdd = randomSign === 'X' ? 'x-placed' : 'o-placed';
+                    node.classList.remove('x-placed', 'o-placed');
+                    node.classList.add(classToAdd);
                 }, 2000);
                 setTimeout(() => { node.classList.remove('tricked', 'bubble') }, 4000);
-                setTimeout(() => {
-                    document.querySelector('.game-screen .exit-button').classList.remove('hidden-layout');
-                    document.querySelector('.game-screen .restart-button').classList.remove('hidden-layout');
-                }, 5500);
                 break;
             }
         }
 
-        return gameboard.checkIfThreeInARowAndSign();
+        return gameboard.checkIfThreeInARowAndSigns();
     }
 
     return { AITurnIsExecuting, beginNewGame, beginNewRound, endRoundIfOver, switchTurns, getCurrentTurnSign };
+})();
+
+const aiBot = (function () {
+    function makeMove() {
+        const board = gameboard.getBoard();
+        const difficultyMode = gameInfo.getDifficultyMode();
+        if (difficultyMode === "EASY") {
+            return addMoveToBoard(makeMoveEasy(board));
+        } else if (difficultyMode === "MEDIUM") {
+            return addMoveToBoard(makeMoveMedium(board));
+        } else { // difficultyMode === "TRICKY"
+            return addMoveToBoard(makeMoveTricky(board));
+        }
+    }
+
+    function addMoveToBoard(spaceIndex) {
+        gameboard.placeOnBoard(spaceIndex, document.querySelector(`.grid-space-${spaceIndex}`), gameInfo.getBotSign());
+    }
+
+    function makeMoveEasy(board) {
+        const freeSpaces = [];
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] === -1) {
+                freeSpaces.push(i);
+            }
+        }
+        const randomIndex = Math.floor(Math.random() * freeSpaces.length);
+        return freeSpaces[randomIndex];
+    }
+
+    function makeMoveMedium(board) {
+        // First, check if AI can win
+        let move = findWinningMoveMedium(board, gameInfo.getBotSign());
+        if (move !== null) return move;
+
+        // Otherwise, block player's winning move
+        const playerSign = gameInfo.getBotSign() === 'X' ? 'O' : 'X';
+        move = findWinningMoveMedium(board, playerSign);
+        if (move !== null) return move;
+
+        // Otherwise, pick a random move
+        return makeMoveEasy(board);
+    }
+
+    function findWinningMoveMedium(board, botSign) {
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] === -1) {
+                board[i] = botSign;
+                if (gameboard.checkIfThreeInARowAndSigns().includes(botSign)) {
+                    board[i] = -1;
+                    return i;
+                }
+                board[i] = -1;
+            }
+        }
+
+        return null;
+    }
+
+    function makeMoveTricky(board) {
+        let bestScore = -Infinity;
+        let move;
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] === -1) {
+                board[i] = gameInfo.getBotSign();
+                let score = minimax(board, 0, false);
+                board[i] = -1;
+                if (score > bestScore) {
+                    bestScore = score;
+                    move = i;
+                }
+            }
+        }
+
+        return move;
+    }
+
+    /* The minimax algorithm is a backtracking algorithm used in decision-making and game theory. It provides an optimal move
+       for the player assuming the opponent is also playing optimally. As Tic Tac Toe is a zero-sum game (one player's gain is
+       another's loss), the Minimax algorithm is particularly well-suited. */
+    function minimax(board, depth, isMaximizing) {
+        const playerSign = gameInfo.getBotSign() === 'X' ? 'O' : 'X';
+        if (gameboard.checkIfThreeInARowAndSigns().includes(gameInfo.getBotSign())) return 1; // AI win
+        if (gameboard.checkIfThreeInARowAndSigns().includes(playerSign)) return -1; // Player win
+        if (gameboard.checkIfTie()) return 0; // Tie
+
+        if (isMaximizing) {
+            let bestScore = -Infinity;
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === -1) {
+                    board[i] = gameInfo.getBotSign();
+                    let score = minimax(board, depth + 1, false);
+                    board[i] = -1;
+                    bestScore = Math.max(score, bestScore);
+                }
+            }
+            return bestScore;
+        } else {
+            let bestScore = Infinity;
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === -1) {
+                    board[i] = playerSign;
+                    let score = minimax(board, depth + 1, true);
+                    board[i] = -1;
+                    bestScore = Math.min(score, bestScore);
+                }
+            }
+            return bestScore;
+        }
+    }
+
+    return { makeMove };
 })();
 
 const displayController = (function () {
@@ -313,6 +451,15 @@ const displayController = (function () {
                 }
             }
         });
+        if (screenToDisplay.classList.contains('game-end-panel') || screenToDisplay.classList.contains('round-end-panel')) {
+            // The current node is a panel
+            document.querySelector('.game-screen .exit-button').classList.add('hidden-layout');
+            document.querySelector('.game-screen .restart-button').classList.add('hidden-layout');
+        } else if (screenToDisplay.classList.contains('game-screen')) {
+            document.querySelector('.game-screen .exit-button').classList.remove('hidden-layout');
+            document.querySelector('.game-screen .restart-button').classList.remove('hidden-layout');
+
+        }
         screenToDisplay.classList.remove('game-screen-blur');
         screenToDisplay.classList.remove('hidden-layout');
     }
@@ -373,8 +520,7 @@ const setup = (function () {
         const spaceIndex = this.className.charAt(this.className.length - 9);
         if (gameboard.spaceIsFree(spaceIndex) && !gameFlow.AITurnIsExecuting()) {
             gameboard.placeOnBoard(spaceIndex, this, gameFlow.getCurrentTurnSign());
-            gameFlow.switchTurns();
-            gameFlow.endRoundIfOver();
+            if (!gameFlow.endRoundIfOver()) gameFlow.switchTurns();
         }
     }
 
@@ -426,7 +572,7 @@ const setup = (function () {
         setModeEventListeners('.player-selection-container>button', gameInfo.setPlayerSelectionMode);
         setModeEventListeners('.modes button', gameInfo.setGameMode);
         setModeEventListeners('.difficulties>button', gameInfo.setDifficultyMode);
-        setModeEventListeners('.ai-bot-sign-selection-container button', gameInfo.setSingleBotSign);
+        setModeEventListeners('.ai-bot-sign-selection-container button', gameInfo.setBotSign);
         setModeEventListeners('.rounds-container button', gameInfo.setGameRounds);
 
         /* the code until end of setMenuScreenEventListeners() is to show the menu options containers consecutively according
@@ -454,7 +600,7 @@ const setup = (function () {
 
                 gameInfo.setGameMode(null);
                 gameInfo.setDifficultyMode(null);
-                gameInfo.setSingleBotSign(null);
+                gameInfo.setBotSign(null);
                 gameInfo.setGameRounds(null);
 
                 if (gameInfo.getPlayerSelectionMode() === "PLAYER VS AI BOT") {
@@ -473,18 +619,21 @@ const setup = (function () {
 
         function setCSSForPlayerVsAI() {
             roundsNode.style.cssText = "grid-row: 6;";
-            gridContainer.style.cssText = "height: 145vh;";
+            gridContainer.style.cssText = "height: 145vh; grid-template-rows: 0.5fr 0.5fr 3fr 2fr 3fr 2fr 1fr;";
+            document.documentElement.style.cssText = "overflow: auto;";
             document.querySelector('.start-game-button').style.cssText = "margin-bottom: 35px; top: 0px;";
         }
 
         function setCSSForNotPlayerVsAI() {
             roundsNode.style.cssText = "grid-row: 4;";
-            gridContainer.style.cssText = "height: 100vh;";
-            document.querySelector('.start-game-button').style.cssText = "margin-bottom: 35px; top: -45px;";
+            gridContainer.style.cssText = "height: 105vh;";
+            document.documentElement.style.cssText = "overflow: hidden;";
+            document.querySelector('.start-game-button').style.cssText = "top: -85px;";
         }
 
         document.querySelectorAll('.modes button').forEach(btn => {
             btn.addEventListener('click', () => {
+                gameInfo.setGameMode(btn.textContent);
                 if (gameInfo.getPlayerSelectionMode() === "PLAYER VS AI BOT") {
                     document.querySelector('.difficulty-container').classList.remove('hidden-layout');
                     setTimeout(() => { document.querySelector('.difficulty-container').classList.add('appear'); }, 1);

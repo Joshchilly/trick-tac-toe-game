@@ -61,7 +61,7 @@ button {
   cursor: pointer;
 }
 
-.clicked {
+button.clicked {
   background-color: var(--clicked-button-background-color);
 }
 
