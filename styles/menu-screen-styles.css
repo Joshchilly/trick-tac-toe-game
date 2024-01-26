@@ -57,7 +57,6 @@ body::-webkit-scrollbar {
   position: relative;
   right: 40.14vw;
   font-family: var(--materials-text-font), Times, serif;
-  box-shadow: 1px 1px 3px 0px black;
 }
 
 .menu-screen .header>.signs {
@@ -172,7 +171,7 @@ p {
 }
 
 .ai-bot-sign-selection-container .x-sign {
-  font-family: var(--text-font-cursive), Times, serif;
+  font-family: var(--text-font-squiggly), Times, serif;
   padding-left: 4.5px;
 }
 
