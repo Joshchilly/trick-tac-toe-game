@@ -181,10 +181,10 @@ const gameFlow = (function () {
                 setup.deactivateGridEventListeners();
                 setTimeout(() => {
                     endRound(gameboard.checkIfThreeInARowAndSigns());
-                }, 800);
+                }, 650);
                 setTimeout(() => {
                     setup.activateGridEventListeners();
-                }, 1100);
+                }, 950);
             }
 
             return true;
@@ -213,16 +213,26 @@ const gameFlow = (function () {
             const sign = document.querySelector('.round-end-panel .sign');
             if (signs.length != 0) { //Someone won
                 announcement.textContent = "THE WINNING PLAYER IS";
+                announcement.style.cssText = "color: var(--text-color);";
                 if (signs.includes('X') && signs.includes('O')) {
                     sign.textContent = 'X AND O';
+                    sign.style.cssText = "background: linear-gradient(to right, var(--x-color), var(--o-color)); background-clip: text; color: transparent;";
                 } else if (signs.includes('X')) {
                     sign.textContent = 'X';
+                    sign.style.cssText = "color: var(--x-color);";
                 } else {
                     sign.textContent = 'O';
+                    sign.style.cssText = "color: var(--o-color);";
                 }
             } else { // It's a draw
                 announcement.textContent = "IT'S A DRAW";
+                announcement.style.cssText = "background: linear-gradient(to right, var(--x-color), var(--o-color)); background-clip: text; color: transparent;";
                 sign.textContent = '';
+                const tieImage = document.createElement('img');
+                tieImage.src = "./assets/images/handshake.jpg";
+                tieImage.alt = "Handshake";
+                tieImage.style.cssText = "width: 20%; height: 20%; border-radius: 50%;";
+                sign.appendChild(tieImage);
                 ties++;
             }
             setTimeout(() => {
@@ -232,13 +242,19 @@ const gameFlow = (function () {
     }
 
     function endGame() {
+        const gameEndSign = document.querySelector('.game-end-sign');
         if (playerX.getWins() > playerO.getWins()) {
-            document.querySelector('.game-end-panel .announcement .sign').textContent = 'X';
+            document.querySelector('.game-end-panel .announcement').style.cssText = "color: var(--text-color);";
+            if (gameEndSign.textContent != null) gameEndSign.textContent = 'X';
+            document.querySelector('.game-end-sign').style.color = "var(--x-color)";
         } else if (playerX.getWins() < playerO.getWins()) {
-            document.querySelector('.game-end-panel .announcement .sign').textContent = 'O';
+            document.querySelector('.game-end-panel .announcement').style.cssText = "color: var(--text-color);";
+            if (gameEndSign.textContent != null) gameEndSign.textContent = 'O';
+            document.querySelector('.game-end-sign').style.color = "var(--o-color)";
         } else {
             ties++;
             document.querySelector('.game-end-panel .announcement').textContent = "IT'S A DRAW";
+            document.querySelector('.game-end-panel .announcement').style.cssText = "background: linear-gradient(to right, var(--x-color), var(--o-color)); background-clip: text; color: transparent;";
         }
         document.querySelector('.game-end-panel .player-x .score').textContent = playerX.getWins();
         document.querySelector('.game-end-panel .player-o .score').textContent = playerO.getWins();
@@ -690,15 +706,18 @@ const setup = (function () {
     function setRoundEndScreenEventListeners() {
         document.querySelector('.round-end-panel .quit-button').addEventListener('click', () => {
             displayController.showHomeScreen();
+            document.querySelector('.round-end-panel .sign').innerHTML = ''; // Remove all children of the sign span node
         });
 
         document.querySelector('.round-end-panel .restart-button').addEventListener('click', () => {
             displayController.showGameScreen();
+            document.querySelector('.round-end-panel .sign').innerHTML = ''; // Remove all children of the sign span node
             gameFlow.beginNewGame();
         });
 
         document.querySelector('.round-end-panel .next-round-button').addEventListener('click', () => {
             displayController.showGameScreen();
+            document.querySelector('.round-end-panel .sign').innerHTML = ''; // Remove all children of the sign span node
             gameFlow.beginNewRound();
         });
     }

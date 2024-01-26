@@ -17,14 +17,15 @@ body::-webkit-scrollbar {
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  word-spacing: 3px;
 }
 
 .menu-screen .grid-container {
   position: relative;
   display: grid;
-  grid-template-rows: 0.5fr 0.5fr 3fr 2fr 3fr 2fr 1fr;
+  grid-template-rows: 0.5fr 0.5fr 3fr 2fr 1fr 1fr 1fr;
   grid-template-columns: minmax(auto, 1fr);
-  row-gap: 45px;
+  row-gap: 13px;
   justify-content: center;
   justify-items: center;
   place-items: center;
@@ -45,13 +46,6 @@ body::-webkit-scrollbar {
   }
 }
 
-.menu-screen button {
-  background-color: var(--button-background-color);
-  color: var(--text-color);
-  padding: 10px;
-  padding-inline: 17px;
-}
-
 .menu-screen .header {
   grid-row: 1;
 }
@@ -62,12 +56,15 @@ body::-webkit-scrollbar {
   padding-inline: 10px;
   position: relative;
   right: 40.14vw;
+  font-family: var(--materials-text-font), Times, serif;
+  box-shadow: 1px 1px 3px 0px black;
 }
 
 .menu-screen .header>.signs {
   display: flex;
   justify-content: center;
   font-size: 3rem;
+  font-family: var(--text-font-cursive), Times, serif;
 }
 
 .mode-container,
@@ -82,6 +79,7 @@ body::-webkit-scrollbar {
   background-color: var(--button-panel-background-color);
   padding: 25px;
   width: 80vw;
+  font-family: var(--text-font-squiggly), Times, serif;
 
   /* Styles for fade in effect */
   opacity: 0;
@@ -100,29 +98,59 @@ body::-webkit-scrollbar {
   padding-top: 30px;
   padding-bottom: 30px;
   gap: 100px;
-  width: 80vw;
+  width: 70vw;
 }
 
 .mode-container {
   grid-row: 3;
 }
 
+.mode-container .title,
+.difficulty-container .title,
+.ai-bot-sign-selection-container .title,
+.rounds-container .title {
+  font-size: 1.5rem;
+  background: var(--sub-title-linear-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  margin-right: -5px;
+  border-radius: 5px;
+  position: relative;
+  z-index: 1;
+}
+
 .modes {
   display: grid;
   grid-template-columns: repeat(2, minmax(auto, 1fr));
   gap: 50px;
+
+  /* Highlighted Text */
+  background: linear-gradient(to right, var(--x-color), var(--o-color));
+  background-clip: text;
+  color: transparent;
 }
 
 .regular-container,
 .trick-container {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 1rem;
 }
 
+p {
+  text-align: center;
+}
+
 .difficulty-container {
   grid-row: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .difficulties,
@@ -138,12 +166,21 @@ body::-webkit-scrollbar {
 }
 
 .ai-bot-sign-selection-container>.buttons {
+  margin-top: 20px;
   display: flex;
   gap: 20px;
 }
 
+.ai-bot-sign-selection-container .x-sign {
+  font-family: var(--text-font-cursive), Times, serif;
+  padding-left: 4.5px;
+}
+
 .rounds-container {
   grid-row: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .menu-screen .start-container {
@@ -172,4 +209,34 @@ body::-webkit-scrollbar {
   .menu-screen .grid-container {
     height: 130vh;
   }
+}
+
+.player-selection-container,
+.mode-container,
+.difficulty-container,
+.ai-bot-sign-selection-container,
+.rounds-container {
+  -webkit-background-clip: text;
+}
+
+.menu-screen button:hover {
+  background-color: var(--button-hover-color);
+  transform: scale(1.2);
+  transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.menu-screen button:active {
+  transform: scale(0.9);
+  font-size: 0.9rem;
+}
+
+.menu-screen button {
+  background-color: var(--button-background-color);
+  color: var(--text-color);
+  font-family: var(--text-font-squiggly), Times, serif;
+  padding: 10px;
+  padding-inline: 17px;
+  border-radius: 15px;
+  border: 2px solid var(--button-background-color);
+  box-shadow: 2px 2px 4px 0px black;
 }

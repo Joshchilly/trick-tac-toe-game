@@ -4,6 +4,8 @@
   justify-content: center;
   height: 100vh;
   width: 100vw;
+  font-family: var(--text-font-squiggly), Times, serif;
+  word-spacing: 6px;
 
   /* Styles for showing the round end panel over the game screen */
   position: fixed;
@@ -13,7 +15,7 @@
   z-index: 2;
 }
 
-.grid-container {
+.round-end-panel .grid-container {
   height: 50vh;
   display: grid;
   grid-template: 1fr 1.3fr 1fr / minmax(auto, 1fr), minmax(auto, 4fr),
@@ -23,6 +25,7 @@
   padding-inline: 8px;
   column-gap: 20px;
   background-color: var(--background-color);
+  row-gap: 55px;
 }
 
 .round-end-panel .announcement {
@@ -34,9 +37,12 @@
 
 .round-end-panel .sign {
   grid-area: 2 / 1 / 3 / 4;
-  font-size: 10rem;
-  margin-bottom: 33px;
-  margin-right: 0.9vw;
+  font-size: 6rem;
+  margin-right: 0.8vw;
+  font-family: var(--text-font-cursive), Times, serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .round-end-panel .options-container {
@@ -52,11 +58,25 @@
   justify-self: flex-start;
 }
 
+.round-end-panel button:hover {
+  background-color: var(--button-hover-color);
+  transform: scale(1.2);
+  transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.round-end-panel button:active {
+  transform: scale(0.9);
+  font-size: 0.9rem;
+}
+
 .round-end-panel button {
   padding: 13px;
   padding-inline: 25px;
   background-color: var(--button-background-color);
   color: var(--text-color);
+  border-radius: 15px;
+  border: 1.5px solid var(--button-background-color);
+  box-shadow: 0px 2px 4px 0px black;
 }
 
 @media (max-width: 1250px) {
@@ -94,8 +114,4 @@
   .round-end-panel {
     background-color: var(--background-color);
   }
-}
-
-.draw-image {
-  background-image: url("./assets/images/handshake.jpg");
 }

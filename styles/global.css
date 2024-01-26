@@ -6,7 +6,7 @@
 @import url("game-end-panel-styles.css");
 
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
-@import url("https://fonts.googleapis.com/css2?family=Archivo&family=Bungee+Spice&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Ms+Madi&display=swap');
 
 /* Google fonts symbols */
 .material-symbols-outlined {
@@ -15,45 +15,83 @@
 
 :root {
   background-color: var(--background-color);
-  --text-font: "Bungee Spice";
-  --title-font: "Archivo";
+  --materials-text-font: "Material Symbols Outlined";
+  --text-font-squiggly: "Agbalumo";
+  --text-font-cursive: "Ms Madi";
+
+  --x-color: rgb(237, 174, 73);
+  /* Warm orange */
+  --o-color: rgb(72, 201, 176);
+  /* Soft teal */
 }
 
 :root.light {
-  --other-theme-name: "DARK MODE";
-  --x-color: rgb(101, 227, 66);
-  --o-color: rgb(241, 180, 64);
-  --background-color: rgb(85, 16, 16);
-  --button-panel-background-color: rgb(87, 12, 106);
-  --button-background-color: rgb(71, 18, 71);
-  --text-color: rgb(239, 220, 220);
-  --text-notice-color: rgb(161, 160, 160);
-  --trick-color: green;
-  --clicked-button-background-color: yellow;
+  --theme-name: "LIGHT MODE";
+  --background-color: rgb(255, 248, 220);
+  /* Light cream for background */
+  --button-panel-background-color: rgb(240, 230, 198);
+  /* Light beige for button panels */
+  --button-background-color: rgb(244, 133, 65);
+  /* Vibrant orange for buttons */
+  --text-color: rgb(77, 77, 77);
+  /* Dark gray for text */
+  --text-notice-color: rgb(150, 150, 150);
+  /* Medium gray for notices */
+  --trick-color: rgb(255, 107, 107);
+  /* Evil green for tricked spaces */
+  --clicked-button-background-color: rgb(255, 107, 107);
+  /* Light red for clicked buttons */
+  --sub-title-linear-gradient: linear-gradient(90deg, #FFA500, rgb(255, 107, 107));
+  /* Orange to Red */
+  --start-game-text-color: rgb(244, 133, 65);
+  /* Deep Orange */
+  --button-hover-color: rgb(242, 134, 110);
+  /* Soft Teal */
+
+  --trick-text-shadow: 9px 7px 5px rgb(51, 48, 48);
+  --trick-mobile-text-shadow: 4px 2px 3px rgb(51, 48, 48);
+  --game-screen-panel-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  --game-screen-grid-shadow: 0px 2.5px 5px 0px black;
 }
 
 :root.dark {
-  --other-theme-name: "LIGHT MODE";
-  --x-color: blue;
-  --o-color: orange;
-  --background-color: rgb(100, 22, 100);
-  --button-panel-background-color: rgb(55, 7, 74);
-  --button-background-color: rgb(52, 14, 52);
-  --text-color: rgb(239, 220, 220);
-  --text-notice-color: rgb(161, 160, 160);
-  --trick-color: green;
-  --clicked-button-background-color: orange;
+  --theme-name: "DARK MODE";
+  --background-color: rgb(34, 40, 49);
+  /* Navy Blue */
+  --button-panel-background-color: rgb(58, 67, 82);
+  /* Muted Teal */
+  --button-background-color: rgb(87, 96, 111);
+  /* Blue-Gray */
+  --text-color: rgb(238, 238, 238);
+  /* Light Gray */
+  --text-notice-color: rgb(189, 189, 189);
+  /* Darker Gray */
+  --trick-color: rgb(26, 197, 51);
+  /* Evil green for tricked spaces */
+  --clicked-button-background-color: rgb(168, 218, 220);
+  /* Light Teal */
+  --sub-title-linear-gradient: linear-gradient(90deg, #FFD700, #FFA500);
+  /* Yellow to Orange */
+  --start-game-text-color: rgb(27, 111, 111);
+  /* Dark Aqua */
+  --button-hover-color: rgb(72, 201, 176);
+  /* Soft Teal */
+
+  --trick-text-shadow: 9px 7px 5px black;
+  --trick-mobile-text-shadow: 4px 2px 3px black;
+  --game-screen-panel-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  --game-screen-grid-shadow: 0px 5.4px 5px 0px black;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --other-theme-name: "DARK MODE";
+    --theme-name: "LIGHT MODE";
   }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --other-theme-name: "LIGHT MODE";
+    --theme-name: "DARK MODE";
   }
 }
 
@@ -63,6 +101,7 @@ button {
 
 button.clicked {
   background-color: var(--clicked-button-background-color);
+  color: rgb(78, 77, 77);
 }
 
 .hidden-layout {
