@@ -94,6 +94,18 @@
   border: 2.5px solid var(--start-game-text-color);
   border-radius: 8px;
   z-index: 1;
+
+
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  /* Smooth transition for transform property */
+  transform: perspective(600px) translateZ(0px) rotateY(0deg);
+  /* Initial 3D state */
+}
+
+.game-grid-container>div:active {
+  transform: perspective(1800px) translateZ(-200px) rotateX(12deg);
+  border: 2.5px solid silver;
+  background-color: rgb(83, 77, 77);
 }
 
 .game-screen .turn-notice {
@@ -133,29 +145,36 @@
   box-shadow: 1px 1px 3px 0px black;
 }
 
-.x-hover {
-  background-color: rgb(237, 174, 73);
-  /* Warm yellow for X hover */
+.x-hover::before {
+  content: 'X';
+  color: var(--x-color);
+  opacity: 0.35;
+  font-family: var(--xo-hover-font), Times, serif;
 }
 
-.o-hover {
-  background-color: rgb(72, 201, 176);
-  /* Soft teal for O hover */
+.o-hover::before {
+  content: 'O';
+  color: var(--o-color);
+  opacity: 0.35;
+  font-family: var(--xo-hover-font), Times, serif;
 }
 
-.x-placed {
-  background-color: var(--x-color);
-  /* Warm yellow for X hover */
+.x-placed::before {
+  content: 'X';
+  color: var(--x-color);
+  font-family: var(--xo-hover-font), Times, serif;
+  animation: glowX 3s ease-in-out infinite alternate;
 }
 
-.o-placed {
-  background-color: var(--o-color);
-  /* Soft teal for O hover */
+.o-placed::before {
+  content: 'O';
+  color: var(--o-color);
+  font-family: var(--xo-hover-font), Times, serif;
+  animation: glowO 3s ease-in-out infinite alternate;
 }
 
 .tricked {
   background-color: var(--trick-color);
-  /* Evil green for tricked spaces */
 }
 
 .wobble {
@@ -209,5 +228,29 @@
   100% {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes glowX {
+  from {
+    text-shadow: 0 0 0px var(--x-color), 0 0 0px var(--x-color), 0 0 0px var(--x-color), 0 0 0px var(--x-color);
+    color: var(--x-color);
+  }
+
+  to {
+    text-shadow: 0 0 15px rgb(212, 133, 6), 0 0 5px rgb(212, 133, 6), 0 0 2px rgb(212, 133, 6), 0 0 0px rgb(212, 133, 6);
+    color: rgb(239, 184, 94);
+  }
+}
+
+@keyframes glowO {
+  from {
+    text-shadow: 0 0 0px var(--o-color), 0 0 0px var(--o-color), 0 0 0px var(--o-color), 0 0 0px var(--o-color);
+    color: var(--o-color);
+  }
+
+  to {
+    text-shadow: 0 0 15px rgb(27, 111, 111), 0 0 5px rgb(27, 111, 111), 0 0 2px rgb(27, 111, 111), 0 0 0px rgb(27, 111, 111);
+    color: rgb(142, 223, 223);
   }
 }
