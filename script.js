@@ -256,11 +256,11 @@ const gameFlow = (function () {
         const gameEndSign = document.querySelector('.game-end-sign');
         if (playerX.getWins() > playerO.getWins()) {
             document.querySelector('.game-end-panel .announcement').style.cssText = "color: var(--text-color);";
-            if (gameEndSign.textContent != null) gameEndSign.textContent = 'X';
+            gameEndSign.textContent = 'X';
             document.querySelector('.game-end-sign').style.color = "var(--x-color)";
         } else if (playerX.getWins() < playerO.getWins()) {
             document.querySelector('.game-end-panel .announcement').style.cssText = "color: var(--text-color);";
-            if (gameEndSign.textContent != null) gameEndSign.textContent = 'O';
+            gameEndSign.textContent = 'O';
             document.querySelector('.game-end-sign').style.color = "var(--o-color)";
         } else {
             ties++;
