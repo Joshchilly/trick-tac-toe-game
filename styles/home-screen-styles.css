@@ -37,6 +37,32 @@
   text-shadow: var(--trick-text-shadow);
 }
 
+@media (max-width: 600px) {
+  .game-name div {
+    font-size: 3.1rem;
+  }
+
+  .home-screen>.grid-container {
+    grid-template-rows: 1fr 1.3fr 1fr;
+    grid-template-columns: repeat(3, minmax(auto, 27vw));
+  }
+
+  .home-screen .signs {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 4rem;
+  }
+
+  .home-screen .start-button {
+    top: 20px;
+    font-size: 4rem;
+  }
+
+  .home-screen .game-name div:first-child {
+    text-shadow: var(--trick-mobile-text-shadow);
+  }
+}
+
 .home-screen .signs {
   grid-area: 2 / 2 / 3 / 3;
   place-self: center;
@@ -112,42 +138,6 @@
   display: flex;
 }
 
-.home-screen .start-button:hover {
-  transform: scale(1.2);
-  transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
-.home-screen .start-button:active {
-  transform: scale(1.1);
-  font-size: 2rem;
-}
-
-@media (max-width: 600px) {
-  .game-name div {
-    font-size: 3.1rem;
-  }
-
-  .home-screen>.grid-container {
-    grid-template-rows: 1fr 1.3fr 1fr;
-    grid-template-columns: repeat(3, minmax(auto, 27vw));
-  }
-
-  .home-screen .signs {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-size: 4rem;
-  }
-
-  .home-screen .start-button {
-    top: 20px;
-    font-size: 2.5rem;
-  }
-
-  .home-screen .game-name div:first-child {
-    text-shadow: var(--trick-mobile-text-shadow);
-  }
-}
-
 @media (orientation: landscape) and (max-height: 500px) {
   .home-screen .game-name {
     font-size: 4rem;
@@ -171,4 +161,14 @@
   .home-screen .theme-button-container {
     font-size: 1rem;
   }
+}
+
+.home-screen .start-button:hover {
+  transform: scale(1.2);
+  transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.home-screen .start-button:active {
+  transform: scale(1.1);
+  font-size: 2rem;
 }
