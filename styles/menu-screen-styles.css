@@ -121,13 +121,6 @@ body::-webkit-scrollbar {
   color: transparent;
 }
 
-@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
-  .modes {
-    background: transparent;
-    color: var(--x-color);
-  }
-}
-
 .regular-container,
 .trick-container {
   margin-top: 20px;
