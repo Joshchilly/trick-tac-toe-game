@@ -35,17 +35,6 @@ body::-webkit-scrollbar {
   display: contents;
 }
 
-@media (orientation: landscape) and (max-height: 500px) {
-  .menu-screen .grid-container {
-    min-height: 300vh;
-    grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
-  }
-
-  .menu-screen {
-    margin-top: 10px;
-  }
-}
-
 .menu-screen .header {
   grid-row: 1;
 }
@@ -195,21 +184,6 @@ p {
   margin-top: -50px;
 }
 
-@media (max-width: 600px) {
-  .menu-screen .start-game-button {
-    padding-inline: 38px;
-    width: 350px;
-    justify-self: center;
-    position: relative;
-    padding: 12px 0px 12px 0px;
-    margin-top: 10px;
-  }
-
-  .menu-screen .grid-container {
-    height: 130vh;
-  }
-}
-
 .player-selection-container,
 .mode-container,
 .difficulty-container,
@@ -238,4 +212,30 @@ p {
   border-radius: 15px;
   border: 2px solid var(--button-background-color);
   box-shadow: 2px 2px 4px 0px black;
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .menu-screen .grid-container {
+    min-height: 300vh;
+    grid-template-rows: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
+  }
+
+  .menu-screen {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .menu-screen .start-game-button {
+    padding-inline: 38px;
+    width: 350px;
+    justify-self: center;
+    position: relative;
+    padding: 12px 0px 12px 0px;
+    margin-top: 10px;
+  }
+
+  .menu-screen .grid-container {
+    height: 130vh;
+  }
 }

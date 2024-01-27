@@ -11,7 +11,13 @@ const gameboard = (function () {
 
     function placeOnBoard(spaceIndex, spaceDiv, sign) {
         board[spaceIndex] = sign;
-        sign === 'X' ? spaceDiv.classList.add('x-placed') : spaceDiv.classList.add('o-placed');
+        if (sign === 'X') {
+            spaceDiv.classList.add('x-placed');
+            spaceDiv.classList.remove('x-hover');
+        } else {
+            spaceDiv.classList.add('o-placed');
+            spaceDiv.classList.remove('o-hover');
+        }
     }
 
     function spaceIsFree(spaceIndex) {

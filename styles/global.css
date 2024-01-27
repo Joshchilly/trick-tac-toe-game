@@ -1,10 +1,10 @@
-@import url("../assets/normalize.css");
 @import url("home-screen-styles.css");
 @import url("menu-screen-styles.css");
 @import url("game-screen-styles.css");
 @import url("round-end-panel-styles.css");
 @import url("game-end-panel-styles.css");
 
+@import url("../assets/normalize.css");
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
 @import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Ms+Madi&family=Rubik+Doodle+Shadow&display=swap');
 
@@ -18,7 +18,7 @@
   --materials-text-font: "Material Symbols Outlined";
   --text-font-squiggly: "Agbalumo";
   --text-font-cursive: "Ms Madi";
-  --xo-hover-font: "Rubik Doodle Shadow";
+  --xo-grid-font: "Rubik Doodle Shadow";
 
   --x-color: rgb(237, 174, 73);
   /* Warm orange */

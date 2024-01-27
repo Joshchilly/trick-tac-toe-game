@@ -8,22 +8,6 @@
   word-spacing: 3px;
 }
 
-@media (max-width: 650px) {
-  .game-grid-container>div {
-    font-size: 6rem;
-  }
-
-  .scoresheet-container {
-    margin-bottom: 70px;
-  }
-
-  .turn-notice {
-    margin-top: 70px;
-    width: 18vw !important;
-    gap: 10px;
-  }
-}
-
 .game-screen .exit-container,
 .game-screen .restart-container {
   position: absolute;
@@ -149,27 +133,29 @@
   content: 'X';
   color: var(--x-color);
   opacity: 0.35;
-  font-family: var(--xo-hover-font), Times, serif;
+  font-family: var(--xo-grid-font), Times, serif;
 }
 
 .o-hover::before {
   content: 'O';
   color: var(--o-color);
   opacity: 0.35;
-  font-family: var(--xo-hover-font), Times, serif;
+  font-family: var(--xo-grid-font), Times, serif;
 }
 
 .x-placed::before {
   content: 'X';
+  opacity: 1 !important;
   color: var(--x-color);
-  font-family: var(--xo-hover-font), Times, serif;
+  font-family: var(--xo-grid-font), Times, serif;
   animation: glowX 3s ease-in-out infinite alternate;
 }
 
 .o-placed::before {
   content: 'O';
+  opacity: 1 !important;
   color: var(--o-color);
-  font-family: var(--xo-hover-font), Times, serif;
+  font-family: var(--xo-grid-font), Times, serif;
   animation: glowO 3s ease-in-out infinite alternate;
 }
 
@@ -252,5 +238,21 @@
   to {
     text-shadow: 0 0 15px rgb(27, 111, 111), 0 0 5px rgb(27, 111, 111), 0 0 2px rgb(27, 111, 111), 0 0 0px rgb(27, 111, 111);
     color: rgb(142, 223, 223);
+  }
+}
+
+@media (max-width: 650px) {
+  .game-grid-container>div {
+    font-size: 6rem;
+  }
+
+  .scoresheet-container {
+    margin-bottom: 70px;
+  }
+
+  .turn-notice {
+    margin-top: 70px;
+    width: 18vw !important;
+    gap: 10px;
   }
 }
