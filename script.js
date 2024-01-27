@@ -169,6 +169,8 @@ const gameFlow = (function () {
 
         if (gameInfo.getGameRounds() > 1) {
             document.querySelector('.round-count').textContent = `ROUND ${gameInfo.getGameRounds() - roundsLeft + 1}`;
+        } else {
+            document.querySelector('.round-count').textContent = '';
         }
 
         document.querySelector('.player-x .score').textContent = playerX.getWins();
@@ -183,7 +185,7 @@ const gameFlow = (function () {
                 setTimeout(() => {
                     endRound(signs);
                 }, 5500);
-            } else { // Game mode is REGULAR
+            } else { // Game mode is CLASSIC
                 setup.deactivateGridEventListeners();
                 setTimeout(() => {
                     endRound(gameboard.checkIfThreeInARowAndSigns());
@@ -213,7 +215,9 @@ const gameFlow = (function () {
 
         roundsLeft--;
         if (roundsLeft === 0) {
-            endGame();
+            setTimeout(() => {
+                endGame();
+            }, 200);
         } else {
             const announcement = document.querySelector('.round-end-panel .announcement');
             const sign = document.querySelector('.round-end-panel .sign');
@@ -248,6 +252,7 @@ const gameFlow = (function () {
     }
 
     function endGame() {
+        displayController.showGameEndPanel();
         const gameEndSign = document.querySelector('.game-end-sign');
         if (playerX.getWins() > playerO.getWins()) {
             document.querySelector('.game-end-panel .announcement').style.cssText = "color: var(--text-color);";
@@ -265,9 +270,6 @@ const gameFlow = (function () {
         document.querySelector('.game-end-panel .player-x .score').textContent = playerX.getWins();
         document.querySelector('.game-end-panel .player-o .score').textContent = playerO.getWins();
         document.querySelector('.game-end-panel .ties .score').textContent = ties;
-        setTimeout(() => {
-            displayController.showGameEndPanel();
-        }, 200);
     }
 
     function switchTurns() {
