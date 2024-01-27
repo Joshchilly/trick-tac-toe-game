@@ -744,10 +744,6 @@ const setup = (function () {
     return { prepareApp, activateGridEventListeners, deactivateGridEventListeners };
 })();
 
-const AIBot = (function () {
-
-})();
-
 function main() {
     setup.prepareApp();
 }
