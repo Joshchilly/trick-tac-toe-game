@@ -50,6 +50,11 @@
   gap: 8px;
 }
 
+.game-screen .status-container .x-sign,
+.game-screen .status-container .o-sign {
+  margin-right: 0.15vw;
+}
+
 .game-screen .game-grid-container {
   display: grid;
   grid-template: repeat(3, minmax(100px, 127.8px)) / repeat(3,
@@ -163,8 +168,36 @@
   background-color: var(--trick-color);
 }
 
-.wobble {
+.tricked::before,
+.tricked::after {
+  content: '👻';
+  font-size: 5rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.tricked::before {
+  animation: ghostFlyOut1 2s ease-out forwards;
+  animation-delay: 0.1s;
+}
+
+.tricked::after {
+  animation: ghostFlyOut2 2s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+.grid-wobble {
   animation: wobble 1.2s infinite;
+}
+
+.grid-space-wobble {
+  animation: wobble 1.5s infinite;
+}
+
+.bubble {
+  animation: bubbleIn 1.15s ease-in;
 }
 
 @keyframes wobble {
@@ -197,10 +230,6 @@
   }
 }
 
-.bubble {
-  animation: wobble 2s infinite, bubbleIn 1s ease-in;
-}
-
 @keyframes bubbleIn {
   0% {
     transform: scale(0);
@@ -214,6 +243,30 @@
   100% {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes ghostFlyOut1 {
+  0% {
+    opacity: 1;
+    transform: scale(0.8);
+  }
+
+  100% {
+    transform: scale(0) translate(-100px, -100px);
+    opacity: 0;
+  }
+}
+
+@keyframes ghostFlyOut2 {
+  0% {
+    opacity: 1;
+    transform: scale(0.8);
+  }
+
+  100% {
+    transform: scale(0) translate(100px, -100px);
+    opacity: 0;
   }
 }
 
@@ -242,6 +295,36 @@
 }
 
 @media (max-width: 650px) {
+  @keyframes wobble {
+    0% {
+      transform: translateX(0);
+    }
+
+    15% {
+      transform: translateX(-2px) rotate(-2deg);
+    }
+
+    30% {
+      transform: translateX(2px) rotate(2deg);
+    }
+
+    45% {
+      transform: translateX(-2px) rotate(-2deg);
+    }
+
+    60% {
+      transform: translateX(2px) rotate(2deg);
+    }
+
+    75% {
+      transform: translateX(-2px) rotate(-2deg);
+    }
+
+    100% {
+      transform: translateX(0);
+    }
+  }
+
   .game-grid-container>div {
     font-size: 6rem;
   }

@@ -184,7 +184,7 @@ const gameFlow = (function () {
                 const signs = trick();
                 setTimeout(() => {
                     endRound(signs);
-                }, 5500);
+                }, 6500);
             } else { // Game mode is CLASSIC
                 setup.deactivateGridEventListeners();
                 setTimeout(() => {
@@ -225,7 +225,7 @@ const gameFlow = (function () {
                 announcement.textContent = "THE WINNING PLAYER IS";
                 announcement.style.cssText = "color: var(--text-color);";
                 if (signs.includes('X') && signs.includes('O')) {
-                    sign.textContent = 'X AND O';
+                    sign.textContent = 'both';
                     sign.style.cssText = "background: linear-gradient(to right, var(--x-color), var(--o-color)); background-clip: text; color: transparent;";
                 } else if (signs.includes('X')) {
                     sign.textContent = 'X';
@@ -322,23 +322,28 @@ const gameFlow = (function () {
         setup.deactivateGridEventListeners();
         document.querySelector('.game-screen .exit-button').classList.add('hidden-layout');
         document.querySelector('.game-screen .restart-button').classList.add('hidden-layout');
-        document.querySelector('.game-grid-container').classList.add('wobble');
+        document.querySelector('.game-grid-container').classList.add('grid-wobble');
         setTimeout(() => {
             setup.activateGridEventListeners();
             document.querySelector('.game-screen .exit-button').classList.add('hidden-layout');
             document.querySelector('.game-screen .restart-button').classList.add('hidden-layout');
-        }, 6300);
+        }, 7300);
         const [switchedIndex, randomSign] = gameboard.randomlySwitchFilledSpaceSign();
         for (node of document.querySelectorAll('.game-grid-container>div')) {
             if (node.classList.contains(`grid-space-${switchedIndex}`)) {
                 setTimeout(() => {
-                    document.querySelector('.game-grid-container').classList.remove('wobble');
-                    node.classList.add('tricked', 'bubble');
+                    document.querySelector('.game-grid-container').classList.remove('grid-wobble');
+                    node.classList.add('grid-space-wobble');
+                    setTimeout(() => {
+                        node.classList.add('bubble', 'tricked');
+                    }, 1500);
                     const classToAdd = randomSign === 'X' ? 'x-placed' : 'o-placed';
-                    node.classList.remove('x-placed', 'o-placed');
-                    node.classList.add(classToAdd);
+                    setTimeout(() => {
+                        node.classList.remove('x-placed', 'o-placed');
+                        node.classList.add(classToAdd);
+                    }, 1700);
                 }, 2000);
-                setTimeout(() => { node.classList.remove('tricked', 'bubble') }, 4000);
+                setTimeout(() => { node.classList.remove('grid-space-wobble', 'bubble', 'tricked') }, 5200);
                 break;
             }
         }
@@ -646,13 +651,14 @@ const setup = (function () {
 
         function setCSSForPlayerVsAI() {
             roundsNode.style.cssText = "grid-row: 6;";
-            gridContainer.style.cssText = "height: 165vh; grid-template-rows: 0.5fr 0.5fr 3fr 2fr 3fr 2fr 1fr;";
-            document.querySelector('.start-game-button').style.cssText = "margin-bottom: 5px;";
+            gridContainer.style.cssText = "height: 160vh; grid-template-rows: 0.5fr 0.5fr 3fr 2fr 3fr 2fr 1fr;";
+            document.querySelector('.start-game-button').style.cssText = "margin-bottom: 0.2vh;";
         }
 
         function setCSSForNotPlayerVsAI() {
             roundsNode.style.cssText = "grid-row: 4;";
-            gridContainer.style.cssText = "height: 130vh;";
+            gridContainer.style.cssText = "height: 110vh;";
+            document.querySelector('.start-game-button').style.cssText = "margin-top: 1.3vh;";
         }
 
         document.querySelectorAll('.modes button').forEach(btn => {
@@ -671,7 +677,11 @@ const setup = (function () {
         document.querySelectorAll('.difficulties>button').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelector('.ai-bot-sign-selection-container').classList.remove('hidden-layout');
-                setTimeout(() => { document.querySelector('.ai-bot-sign-selection-container').classList.add('appear'); }, 1);
+                setTimeout(() => {
+                    const aiBotSignSelectionContainer = document.querySelector('.ai-bot-sign-selection-container');
+                    aiBotSignSelectionContainer.classList.add('appear');
+                    aiBotSignSelectionContainer.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+                }, 1);
             });
         });
 
@@ -684,7 +694,9 @@ const setup = (function () {
 
         document.querySelectorAll('.rounds-container button').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelector('.start-game-button').classList.remove('hidden-layout');
+                const startGameButton = document.querySelector('.start-game-button');
+                startGameButton.classList.remove('hidden-layout');
+                startGameButton.scrollIntoViewIfNeeded({ behavior: "smooth", block: "center", inline: "center" });
             });
         });
 

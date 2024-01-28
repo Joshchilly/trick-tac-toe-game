@@ -180,7 +180,7 @@ p {
   width: 350px;
   justify-self: center;
   position: relative;
-  padding: 12px 0px 12px 0px;
+  padding: 11px 0px 11px 0px;
   margin-top: -50px;
 }
 
@@ -227,12 +227,11 @@ p {
 
 @media (max-width: 600px) {
   .menu-screen .start-game-button {
-    padding-inline: 38px;
+    padding-inline: 35px;
     width: 350px;
     justify-self: center;
     position: relative;
-    padding: 12px 0px 12px 0px;
-    margin-top: 10px;
+    padding: 11px 0px 11px 0px;
   }
 
   .menu-screen .grid-container {
