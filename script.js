@@ -657,7 +657,7 @@ const setup = (function () {
 
         function setCSSForNotPlayerVsAI() {
             roundsNode.style.cssText = "grid-row: 4;";
-            gridContainer.style.cssText = "height: 110vh;";
+            gridContainer.style.cssText = "height: 115vh;";
             document.querySelector('.start-game-button').style.cssText = "margin-top: 0.5vh;";
         }
 
@@ -675,7 +675,7 @@ const setup = (function () {
                     roundsNode.classList.remove('hidden-layout');
                     setTimeout(() => {
                         roundsNode.classList.add('appear');
-                        roundsNode.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
+                        roundsNode.scrollIntoViewIfNeeded({ behavior: "smooth", block: "center", inline: "center" });
                     }, 1);
                 }
             });
