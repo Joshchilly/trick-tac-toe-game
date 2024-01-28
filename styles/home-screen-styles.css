@@ -39,23 +39,28 @@
 
 @media (max-width: 600px) {
   .game-name div {
-    font-size: 3.1rem;
+    font-size: 2.9rem;
   }
 
   .home-screen>.grid-container {
     grid-template-rows: 1fr 1.3fr 1fr;
-    grid-template-columns: repeat(3, minmax(auto, 27vw));
+    grid-template-columns: repeat(3, minmax(auto, 23vw));
   }
 
   .home-screen .signs {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    font-size: 5rem;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    font-size: 4rem;
   }
 
   .home-screen .start-button {
     top: 20px;
-    font-size: 4rem;
+    font-size: 3.2rem;
+  }
+
+  .home-screen .theme-button-container {
+    padding: 10px;
+    font-size: 0.6rem;
   }
 
   .home-screen .game-name div:first-child {
