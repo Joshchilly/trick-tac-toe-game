@@ -665,10 +665,17 @@ const setup = (function () {
                 gameInfo.setGameMode(btn.textContent);
                 if (gameInfo.getPlayerSelectionMode() === "PLAYER VS AI BOT") {
                     document.querySelector('.difficulty-container').classList.remove('hidden-layout');
-                    setTimeout(() => { document.querySelector('.difficulty-container').classList.add('appear'); }, 1);
+                    setTimeout(() => {
+                        const difficultyContainer = document.querySelector('.difficulty-container');
+                        difficultyContainer.classList.add('appear');
+                        difficultyContainer.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+                    }, 1);
                 } else {
                     roundsNode.classList.remove('hidden-layout');
-                    setTimeout(() => { roundsNode.classList.add('appear'); }, 1);
+                    setTimeout(() => {
+                        roundsNode.classList.add('appear');
+                        roundsNode.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
+                    }, 1);
                 }
             });
         });
