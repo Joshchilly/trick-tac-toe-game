@@ -45,6 +45,7 @@
   .home-screen>.grid-container {
     grid-template-rows: 1fr 1.3fr 1fr;
     grid-template-columns: repeat(3, minmax(auto, 23vw));
+    height: 90vh;
   }
 
   .home-screen .signs {
