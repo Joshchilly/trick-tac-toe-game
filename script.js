@@ -657,7 +657,7 @@ const setup = (function () {
 
         function setCSSForNotPlayerVsAI() {
             roundsNode.style.cssText = "grid-row: 4;";
-            gridContainer.style.cssText = "height: 115vh;";
+            gridContainer.style.cssText = "height: 116vh;";
             document.querySelector('.start-game-button').style.cssText = "margin-top: 0.5vh;";
         }
 
