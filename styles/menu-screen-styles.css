@@ -247,6 +247,11 @@ p {
     padding: 11px 0px 11px 0px;
   }
 
+  .menu-screen .start-game-button:active {
+    transform: scale(1);
+    font-size: 1.6rem;
+  }
+
   .menu-screen .grid-container {
     height: 130vh;
   }
