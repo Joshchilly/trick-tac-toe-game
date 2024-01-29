@@ -24,7 +24,9 @@ const gameboard = (function () {
         return board[spaceIndex] === -1;
     }
 
-    const checkIfTie = () => board.every(value => value != -1);
+    function checkIfTie() {
+        return checkIfThreeInARowAndSigns().length === 0 && !board.includes(-1);
+    }
 
     function checkIfThreeInARowAndSigns() {
         // Define the collection of rows on the board 
@@ -274,13 +276,13 @@ const gameFlow = (function () {
             sign.textContent = 'O';
             sign.style.color = "var(--o-color)";
         } else {
-            ties++;
             announcement.textContent = "IT'S A DRAW";
             announcement.style.cssText = "background: linear-gradient(to right, var(--x-color), var(--o-color)); background-clip: text; color: transparent;";
             sign.textContent = '';
         }
         document.querySelector('.game-end-panel .player-x .score').textContent = playerX.getWins();
         document.querySelector('.game-end-panel .player-o .score').textContent = playerO.getWins();
+        if (gameboard.checkIfTie()) ties++; // If the last round was a tie, increment ties
         document.querySelector('.game-end-panel .ties .score').textContent = ties;
     }
 
