@@ -126,6 +126,7 @@
   font-family: var(--materials-text-font), Times, serif;
   border-radius: 25px;
   z-index: 0;
+  margin-bottom: 3vh;
 }
 
 .home-screen .theme-button {
@@ -181,4 +182,17 @@
 .home-screen .start-button:active {
   transform: scale(1.1);
   font-size: 2rem;
+}
+
+.home-screen footer {
+  position: absolute;
+  bottom: 1vh;
+  width: 100%;
+  height: 2vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color);
+  font-size: 0.8rem;
+  font-family: var(--text-font-squiggly), Times, serif;
 }

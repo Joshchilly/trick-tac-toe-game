@@ -670,13 +670,16 @@ const setup = (function () {
                         const difficultyContainer = document.querySelector('.difficulty-container');
                         difficultyContainer.classList.add('appear');
                         difficultyContainer.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
-                    }, 1);
+                    }, 50);
                 } else {
                     roundsNode.classList.remove('hidden-layout');
                     setTimeout(() => {
                         roundsNode.classList.add('appear');
-                        roundsNode.scrollIntoViewIfNeeded({ behavior: "smooth", block: "center", inline: "center" });
-                    }, 1);
+                        if (window.innerWidth <= 600) {
+                            // Viewing on a mobile device
+                            roundsNode.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+                        }
+                    }, 50);
                 }
             });
         });
@@ -688,14 +691,14 @@ const setup = (function () {
                     const aiBotSignSelectionContainer = document.querySelector('.ai-bot-sign-selection-container');
                     aiBotSignSelectionContainer.classList.add('appear');
                     aiBotSignSelectionContainer.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
-                }, 1);
+                }, 50);
             });
         });
 
         document.querySelectorAll('.ai-bot-sign-selection-container button').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelector('.rounds-container').classList.remove('hidden-layout');
-                setTimeout(() => { document.querySelector('.rounds-container').classList.add('appear'); }, 1);
+                setTimeout(() => { document.querySelector('.rounds-container').classList.add('appear'); }, 50);
             });
         });
 
