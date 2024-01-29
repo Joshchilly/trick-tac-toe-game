@@ -173,9 +173,10 @@
   content: '👻';
   font-size: 5rem;
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 2;
 }
 
 .tricked::before {
@@ -265,7 +266,7 @@
   }
 
   100% {
-    transform: scale(0) translate(100px, -100px);
+    transform: scale(0) translate(-100px, -400px);
     opacity: 0;
   }
 }

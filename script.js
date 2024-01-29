@@ -151,7 +151,14 @@ const gameFlow = (function () {
                 }
         }
 
+        clearScoreSheet();
         beginNewRound();
+    }
+
+    function clearScoreSheet() {
+        document.querySelector('.player-x .score').textContent = 0;
+        document.querySelector('.player-o .score').textContent = 0;
+        document.querySelector('.ties .score').textContent = 0;
     }
 
     function beginNewRound() {
@@ -253,19 +260,22 @@ const gameFlow = (function () {
 
     function endGame() {
         displayController.showGameEndPanel();
-        const gameEndSign = document.querySelector('.game-end-sign');
+        const announcement = document.querySelector('.game-end-panel .announcement');
+        const sign = document.querySelector('.game-end-panel .sign');
         if (playerX.getWins() > playerO.getWins()) {
-            document.querySelector('.game-end-panel .announcement').style.cssText = "color: var(--text-color);";
-            gameEndSign.textContent = 'X';
-            document.querySelector('.game-end-sign').style.color = "var(--x-color)";
+            announcement.style.cssText = "color: var(--text-color);";
+            announcement.textContent = "VICTORY GOES TO ";
+            sign.textContent = 'X';
+            sign.style.color = "var(--x-color)";
         } else if (playerX.getWins() < playerO.getWins()) {
-            document.querySelector('.game-end-panel .announcement').style.cssText = "color: var(--text-color);";
-            gameEndSign.textContent = 'O';
-            document.querySelector('.game-end-sign').style.color = "var(--o-color)";
+            announcement.style.cssText = "color: var(--text-color);";
+            announcement.textContent = "VICTORY GOES TO ";
+            sign.textContent = 'O';
+            sign.style.color = "var(--o-color)";
         } else {
             ties++;
-            document.querySelector('.game-end-panel .announcement').textContent = "IT'S A DRAW";
-            document.querySelector('.game-end-panel .announcement').style.cssText = "background: linear-gradient(to right, var(--x-color), var(--o-color)); background-clip: text; color: transparent;";
+            announcement.textContent = "IT'S A DRAW";
+            announcement.style.cssText = "background: linear-gradient(to right, var(--x-color), var(--o-color)); background-clip: text; color: transparent;";
         }
         document.querySelector('.game-end-panel .player-x .score').textContent = playerX.getWins();
         document.querySelector('.game-end-panel .player-o .score').textContent = playerO.getWins();
@@ -467,6 +477,9 @@ const aiBot = (function () {
 })();
 
 const displayController = (function () {
+    let currentScreen = null;
+    const getCurrentScreen = () => currentScreen;
+
     const screens = document.querySelectorAll('body>div');
     function displayScreen(screenToDisplay) {
         screens.forEach(screen => {
@@ -491,6 +504,7 @@ const displayController = (function () {
         }
         screenToDisplay.classList.remove('game-screen-blur');
         screenToDisplay.classList.remove('hidden-layout');
+        currentScreen = screenToDisplay;
     }
 
     const showHomeScreen = () => displayScreen(screens[0]);
@@ -499,7 +513,7 @@ const displayController = (function () {
     const showRoundEndPanel = () => displayScreen(screens[3]);
     const showGameEndPanel = () => displayScreen(screens[4]);
 
-    return { showHomeScreen, showMenuScreen, showGameScreen, showRoundEndPanel, showGameEndPanel };
+    return { getCurrentScreen, showHomeScreen, showMenuScreen, showGameScreen, showRoundEndPanel, showGameEndPanel };
 })();
 
 const setup = (function () {
@@ -547,7 +561,9 @@ const setup = (function () {
 
     function gridClickHandler() {
         const spaceIndex = this.className.charAt(this.className.length - 9);
-        if (gameboard.spaceIsFree(spaceIndex) && !gameFlow.AITurnIsExecuting()) {
+        if (gameboard.spaceIsFree(spaceIndex) && !gameFlow.AITurnIsExecuting() &&
+            !(displayController.getCurrentScreen().classList.contains('round-end-panel') ||
+                displayController.getCurrentScreen().classList.contains('game-end-panel'))) {
             gameboard.placeOnBoard(spaceIndex, this, gameFlow.getCurrentTurnSign());
             if (!gameFlow.endRoundIfOver()) gameFlow.switchTurns();
         }
