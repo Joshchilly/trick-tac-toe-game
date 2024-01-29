@@ -82,6 +82,7 @@
   border-radius: 15px;
   border: 1.5px solid var(--button-background-color);
   box-shadow: 0px 2px 4px 0px black;
+  word-spacing: 0.3vw;
 }
 
 .game-end-panel button:first-of-type {
@@ -122,15 +123,16 @@
 
   .game-end-panel button {
     padding: 8px;
-    padding-inline: 12px;
+    width: 32vw;
+    font-size: 0.9rem;
   }
 
   .game-end-panel button:first-of-type {
-    margin-right: 15px;
+    margin-right: 6vw;
   }
 
   .game-end-panel button:last-of-type {
-    margin-left: 15px;
+    margin-left: 6vw;
   }
 }
 

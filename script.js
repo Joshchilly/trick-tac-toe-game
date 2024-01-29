@@ -151,14 +151,15 @@ const gameFlow = (function () {
                 }
         }
 
-        clearScoreSheet();
+        clearScoresheet();
         beginNewRound();
     }
 
-    function clearScoreSheet() {
+    function clearScoresheet() {
         document.querySelector('.player-x .score').textContent = 0;
         document.querySelector('.player-o .score').textContent = 0;
         document.querySelector('.ties .score').textContent = 0;
+        ties = 0;
     }
 
     function beginNewRound() {
@@ -276,6 +277,7 @@ const gameFlow = (function () {
             ties++;
             announcement.textContent = "IT'S A DRAW";
             announcement.style.cssText = "background: linear-gradient(to right, var(--x-color), var(--o-color)); background-clip: text; color: transparent;";
+            sign.textContent = '';
         }
         document.querySelector('.game-end-panel .player-x .score').textContent = playerX.getWins();
         document.querySelector('.game-end-panel .player-o .score').textContent = playerO.getWins();
