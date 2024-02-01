@@ -584,6 +584,7 @@ const setup = (function () {
     function setHomeScreenEventListeners() {
         document.querySelector('.start-button').addEventListener('click', () => {
             displayController.showMenuScreen();
+            document.querySelector('.menu-screen .header').scrollIntoView({ behavior: "instant", block: "start", inline: "center" });
         });
 
         const root = document.documentElement;
@@ -743,7 +744,6 @@ const setup = (function () {
     function setGameScreenEventListeners() {
         document.querySelector('.game-screen .exit-button').addEventListener('click', () => {
             displayController.showMenuScreen();
-            // Scroll to the top of menu screen
             document.querySelector('.menu-screen .header').scrollIntoView({ behavior: "instant", block: "start", inline: "center" });
         });
 
