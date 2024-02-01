@@ -1,15 +1,3 @@
-body {
-  -ms-overflow-style: none;
-  /* Internet Explorer 10+ */
-  scrollbar-width: none;
-  /* Firefox */
-}
-
-body::-webkit-scrollbar {
-  display: none;
-  /* Safari and Chrome */
-}
-
 .menu-screen {
   background-color: var(--background-color);
   color: var(--text-color);
@@ -18,6 +6,20 @@ body::-webkit-scrollbar {
   align-items: center;
   height: 100vh;
   word-spacing: 3px;
+
+  /* Enable scrolling */
+  overflow: auto;
+
+  /* Hide scrollbars */
+  scrollbar-width: none;
+  /* For Firefox */
+  -ms-overflow-style: none;
+  /* For Internet Explorer and Edge */
+
+  /* For Chrome, Safari, and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .menu-screen .grid-container {

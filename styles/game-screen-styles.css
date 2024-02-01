@@ -68,6 +68,20 @@
   margin-inline: auto;
   margin-top: 40px;
   margin-bottom: 40px;
+
+  /* Enable scrolling */
+  overflow: auto;
+
+  /* Hide scrollbars */
+  scrollbar-width: none;
+  /* For Firefox */
+  -ms-overflow-style: none;
+  /* For Internet Explorer and Edge */
+
+  /* For Chrome, Safari, and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .game-grid-container>div {

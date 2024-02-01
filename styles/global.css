@@ -120,3 +120,8 @@ button.clicked {
   transition: filter 2s ease-in;
   z-index: 1;
 }
+
+
+body::-webkit-scrollbar {
+  display: none;
+}
